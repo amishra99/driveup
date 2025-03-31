@@ -385,7 +385,7 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const [showSearchInput, setShowSearchInput] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
