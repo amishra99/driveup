@@ -58,6 +58,7 @@ import { Progress } from "@/components/ui/progress";
 import ailoading from "@/components/ailoading.json";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { MultiValue } from "react-select";
 
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
@@ -316,8 +317,6 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
-
-
 const formatPrice = (price: number) => {
   if (price >= 10000000) {
     return `${(price / 10000000).toFixed(2)} Cr`; // Convert to Crores if 1 Cr+
@@ -547,45 +546,69 @@ const App = () => {
 
   const [showInfo, setShowInfo] = useState(false);
 
-  const [answers, setAnswers] = useState({
+  type Answers = {
+    budget: string;
+    fuel: string;
+    bodyType: string;
+    seatingCapacity: string;
+    transmissionType: string;
+    brand: string[];
+    safetyPreference: string;
+    performancePreference: string;
+    additionalFeatures: string[];
+
+    [key: string]: string | string[]; // 🔥 Add this line
+  };
+
+  const [answers, setAnswers] = useState<Answers>({
     budget: "",
     fuel: "",
     bodyType: "",
     seatingCapacity: "",
     transmissionType: "no_preference",
-    brand: [], // Multi-Select Dropdown for Brand Preference
+    brand: [],
     safetyPreference: "no_preference",
     performancePreference: "",
-    additionalFeatures: [], // Multi-Checkbox Selection
+    additionalFeatures: [],
   });
 
   const currentQuestion = questions[step];
-  const isAnswered = !!answers[currentQuestion.id]; // Check if the user has answered
+  const isAnswered = !!answers[currentQuestion.id as keyof Answers];
 
-  const handleSelect = (questionId, value) => {
+  const handleSelect = (questionId: keyof Answers, value: string) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: value,
     }));
   };
 
-  const handleMultiSelect = (questionId, selectedOptions) => {
+  type OptionType = { value: string; label: string };
+
+  const handleMultiSelect = (
+    questionId: keyof Answers,
+    selectedOptions: MultiValue<OptionType>
+  ) => {
     setAnswers((prev) => ({
       ...prev,
-      [questionId]: Array.isArray(selectedOptions)
-        ? selectedOptions.map((option) => option.value)
-        : [],
+      [questionId]: selectedOptions.map((option) => option.value),
     }));
   };
 
-  const handleCheckboxSelect = (questionId, optionId, checked) => {
+  const handleCheckboxSelect = (
+    questionId: keyof Answers,
+    optionId: string,
+    checked: boolean
+  ) => {
     setAnswers((prev) => {
-      const selected = prev[questionId] || [];
+      const selected = Array.isArray(prev[questionId])
+        ? (prev[questionId] as string[])
+        : [];
+
       return {
         ...prev,
         [questionId]: checked
-          ? [...selected, optionId] // Add if checked
-          : selected.filter((id) => id !== optionId), // Remove if unchecked
+          ? [...selected, optionId]
+          : selected.filter((id) => id !== optionId),
       };
     });
   };
@@ -663,13 +686,25 @@ const App = () => {
   ).length;
 
   const [loading, setLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState([]);
+
+  type CarRecommendation = {
+    variant_id: string;
+    model: string;
+    variant: string;
+    body_type: string;
+    car_price: number;
+    performance_and_fuel_economy_fuel_type: string;
+    explanation: string[] | string;
+  };
+
+  const [recommendations, setRecommendations] = useState<CarRecommendation[]>(
+    []
+  );
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const loadingRef = useRef(null); // ✅ Reference for the loading animation
+  const loadingRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
     setHasSubmitted(true); // ✅ Mark form as submitted
 
@@ -787,7 +822,7 @@ const App = () => {
                   {/* Render Single-Select as Buttons */}
                   {currentQuestion.type === "single-select" && (
                     <div className="grid grid-cols-2 gap-4">
-                      {currentQuestion.options.map((option) => (
+                      {currentQuestion.options?.map((option) => (
                         <Button
                           key={option.id}
                           variant="outline"
@@ -814,15 +849,22 @@ const App = () => {
                       options={brandOptions}
                       isMulti
                       value={
-                        answers[currentQuestion.id]?.map((val) => ({
-                          value: val,
-                          label:
-                            brandOptions.find((opt) => opt.value === val)
-                              ?.label || val,
-                        })) || []
-                      } // Ensures the selected value is correctly formatted
+                        Array.isArray(answers[currentQuestion.id])
+                          ? (answers[currentQuestion.id] as string[]).map(
+                              (val) => ({
+                                value: val,
+                                label:
+                                  brandOptions.find((opt) => opt.value === val)
+                                    ?.label || val,
+                              })
+                            )
+                          : []
+                      }
                       onChange={(selectedOptions) =>
-                        handleMultiSelect(currentQuestion.id, selectedOptions)
+                        handleMultiSelect(
+                          currentQuestion.id as keyof Answers,
+                          selectedOptions
+                        )
                       }
                       placeholder="Select preferred brands"
                       className="text-black z-50"
@@ -839,7 +881,7 @@ const App = () => {
                   {/* Render Multi-Checkbox (Additional Features) */}
                   {currentQuestion.type === "multi-checkbox" && (
                     <div className="grid grid-cols-2 gap-4">
-                      {currentQuestion.options.map((option) => (
+                      {currentQuestion.options?.map((option) => (
                         <label
                           key={option.id}
                           className="flex items-center gap-2 cursor-pointer bg-[#1a1a1a] border border-white rounded-lg px-4 py-3 transition-all duration-300 hover:border-[#EE9B00]"
@@ -927,9 +969,9 @@ const App = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         if (step === questions.length - 1) {
-                          handleSubmit(e); // Calls handleSubmit on the last question
+                          handleSubmit(); // No need to pass `e`
                         } else {
-                          handleNext(); // Moves to the next question
+                          handleNext();
                         }
                       }}
                       disabled={
