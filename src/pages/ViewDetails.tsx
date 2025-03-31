@@ -130,7 +130,12 @@ const thumbnails = [
   "https://images.unsplash.com/photo-1633078654544-61b3455b9161?auto=format&fit=crop&w=100",
 ];
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+type SidebarProps = {
+  isOpen: boolean;
+  toggleSidebar: () => void;
+};
+
+const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const [user, setUser] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
