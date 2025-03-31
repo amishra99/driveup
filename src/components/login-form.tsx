@@ -18,6 +18,12 @@ import {
   setDoc,
 } from "@/utils/firebaseConfig";
 
+declare global {
+  interface Window {
+    recaptchaVerifier: RecaptchaVerifier;
+  }
+}
+
 export function LoginForm({
   className,
   ...props
