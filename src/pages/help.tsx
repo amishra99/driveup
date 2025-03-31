@@ -331,6 +331,11 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
+const Footer = () => (
+  <footer className="bg-[#212121] text-gray-400 text-center p-6 mt-8 w-full">
+    <p>© {new Date().getFullYear()} DriveUp. All rights reserved.</p>
+  </footer>
+);
 
 const categorizedFaqs = {
   "About DriveUp": [
@@ -516,27 +521,32 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("About DriveUp");
 
-  const faqs = categorizedFaqs[activeTab] || [];
+  type Category = keyof typeof categorizedFaqs;
+
+  const faqs = categorizedFaqs[activeTab as Category] || [];
 
   const filteredFaqs = faqs.filter((faq) =>
     faq.question.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const [formType, setFormType] = useState(null); // null, 'contact', 'feedback'
+  const [formType, setFormType] = useState<"contact" | "feedback" | null>(null);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formType) return;
 
-    const form = e.target;
+    const form = e.currentTarget; // ✅ safer than `e.target`
+
     const formData = {
-      name: form.name?.value || "Anonymous",
-      email: form.email?.value,
-      phone: form.phone?.value || "N/A",
-      message: form.message?.value,
-      category: form.category?.value || null, // for feedback only
+      name:
+        (form.elements.namedItem("name") as HTMLInputElement)?.value ||
+        "Anonymous",
+      email: (form.email as HTMLInputElement)?.value,
+      phone: (form.phone as HTMLInputElement)?.value || "N/A",
+      message: (form.message as HTMLTextAreaElement)?.value,
+      category: (form.category as HTMLSelectElement)?.value || null, // for feedback only
       timestamp: Timestamp.now(),
     };
 
@@ -561,7 +571,7 @@ const App = () => {
   
   Name: ${formData.name}
   Email: ${formData.email}
-    Phone: ${formData.phone}
+  Phone: ${formData.phone}
   Category: ${formData.category}
   Message: ${formData.message}
   `;
@@ -576,6 +586,7 @@ const App = () => {
           text,
         },
       });
+
       toast.success(
         formType === "contact"
           ? "Your message has been sent!"
@@ -583,7 +594,7 @@ const App = () => {
       );
 
       setIsSubmitted(true);
-      form.reset(); // clear form fields
+      form.reset();
       setTimeout(() => {
         setIsSubmitted(false);
         setFormType(null);
@@ -817,7 +828,7 @@ const App = () => {
                               <textarea
                                 required
                                 name="message"
-                                rows="4"
+                                rows={4}
                                 placeholder="Your Message"
                                 className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
                               />
@@ -924,7 +935,7 @@ const App = () => {
                               <textarea
                                 name="message"
                                 required
-                                rows="4"
+                                rows={4}
                                 placeholder="Share your thoughts..."
                                 className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
                               />
