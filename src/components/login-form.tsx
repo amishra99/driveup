@@ -37,7 +37,7 @@ export function LoginForm({
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [verificationId, setVerificationId] = useState(null);
+  const [verificationId, setVerificationId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
