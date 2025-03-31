@@ -123,7 +123,7 @@ export function LoginForm({
 
   const [userStatus, setUserStatus] = useState("checking"); // ✅ Controls what happens after login
 
-  const handleVerifyOtp = async (e) => {
+  const handleVerifyOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!otp || !verificationId) {
       setDebugMessage("⚠ Enter OTP before verifying.");
