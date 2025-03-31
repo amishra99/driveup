@@ -477,6 +477,11 @@ const App = () => {
 
   const [showGuidelines, setShowGuidelines] = useState(false);
 
+  type ChatMessage = {
+    role: "user" | "assistant";
+    content: string;
+  };
+
   return (
     <>
       <Head>
@@ -676,7 +681,7 @@ const App = () => {
                       to explore car insights!
                     </div>
                   ) : (
-                    conversationHistory.map((message, index) => (
+                    conversationHistory.map((message: ChatMessage, index: number) => (
                       <div key={index} className="mb-4">
                         {message.role === "user" ? (
                           <div className="text-right">
