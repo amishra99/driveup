@@ -20,9 +20,10 @@ import {
 
 declare global {
   interface Window {
-    recaptchaVerifier: RecaptchaVerifier;
+    recaptchaVerifier: RecaptchaVerifier | null;
   }
 }
+
 
 export function LoginForm({
   className,
