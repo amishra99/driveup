@@ -63,7 +63,12 @@ import Head from "next/head";
 
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+type SidebarProps = {
+  isOpen: boolean;
+  toggleSidebar: () => void;
+};
+
+const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const [user, setUser] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
