@@ -108,7 +108,11 @@ export function LoginForm({
       setMessage("✅ OTP Sent! Please enter the OTP.");
     } catch (error) {
       console.error("❌ Error sending OTP:", error);
-      setMessage(`Error: ${error.message}`);
+      if (error instanceof Error) {
+        setMessage(`Error: ${error.message}`);
+      } else {
+        setMessage("An unknown error occurred.");
+      }
     }
 
     setLoading(false);
