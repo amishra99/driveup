@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [userStatus, setUserStatus] = useState("checking");
+  const [userStatus, setUserStatus] = useState<string | null>("checking");
 
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence)
