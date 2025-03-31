@@ -64,7 +64,7 @@ export default function FuelPriceChart({
           const prices = data[fuelType];
           const formatted = Object.entries(prices).map(([date, price]) => ({
             date,
-            price: parseFloat(price),
+            price: parseFloat(price as string), // <- Fixed!
           }));
           setChartData(formatted);
         }
