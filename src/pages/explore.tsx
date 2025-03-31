@@ -673,11 +673,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
-const Footer = () => (
-  <footer className="bg-[#212121] text-gray-400 text-center p-6 mt-8 w-full">
-    <p>© {new Date().getFullYear()} DriveUp. All rights reserved.</p>
-  </footer>
-);
+
 
 const PriceFilter = ({ minPrice, maxPrice, setPriceRange }) => (
   <div className="w-60 flex flex-col gap-3 p-3 rounded-lg">
@@ -769,7 +765,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
   );
 };
 
-const formatPrice = (price) => {
+const formatPrice = (price: number) => {
   if (price >= 10000000) {
     return `${(price / 10000000).toFixed(2)} Cr`; // Convert to Crores if 1 Cr+
   } else {
