@@ -334,7 +334,11 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
-
+const Footer = () => (
+  <footer className="bg-[#212121] text-gray-400 text-center p-6 mt-8 w-full">
+    <p>© {new Date().getFullYear()} DriveUp. All rights reserved.</p>
+  </footer>
+);
 
 const useAnimatedNumber = (target: number | null, duration = 800) => {
   const [value, setValue] = useState(0);
@@ -583,15 +587,22 @@ const App = () => {
 
                         const mileage =
                           customMileage || mileageMap[carType][drivingType];
-                        const fuelTrend = fuelPriceData?.[fuelType];
+                        const fuelTrend = fuelPriceData?.[fuelType] as Record<
+                          string,
+                          string | number
+                        >;
+
                         const latestFuelPrice = fuelTrend
-                          ? Object.entries(fuelTrend)
-                              .sort(
-                                ([dateA], [dateB]) =>
-                                  new Date(dateA).getTime() -
-                                  new Date(dateB).getTime()
-                              )
-                              .at(-1)?.[1]
+                          ? parseFloat(
+                              Object.entries(fuelTrend)
+                                .sort(
+                                  ([dateA], [dateB]) =>
+                                    new Date(dateA).getTime() -
+                                    new Date(dateB).getTime()
+                                )
+                                .at(-1)?.[1]
+                                .toString() || "0"
+                            )
                           : null;
 
                         if (!latestFuelPrice || !mileage) {
@@ -725,7 +736,7 @@ const App = () => {
                       </button>
 
                       {/* Result Display */}
-                      {cost > 0 && (
+                      {typeof cost === "number" && cost > 0 && (
                         <motion.div
                           className="shadow-sm"
                           initial={{ opacity: 0, y: 20 }}
