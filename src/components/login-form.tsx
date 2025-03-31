@@ -24,7 +24,6 @@ declare global {
   }
 }
 
-
 export function LoginForm({
   className,
   ...props
@@ -92,17 +91,20 @@ export function LoginForm({
 
       setMessage("Sending OTP...");
 
-      // ✅ Get reCAPTCHA Verifier
+      if (!window.recaptchaVerifier) {
+        console.error("❌ reCAPTCHA verifier not initialized.");
+        setMessage("reCAPTCHA not ready. Please try again.");
+        return;
+      }
+
       const appVerifier = window.recaptchaVerifier;
 
-      // ✅ Send OTP
       const confirmation = await signInWithPhoneNumber(
         auth,
         `+91${phone}`,
         appVerifier
       );
 
-      // ✅ Store verification ID
       setVerificationId(confirmation.verificationId);
       setOtpSent(true);
       setCountdown(30);
