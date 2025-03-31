@@ -1,0 +1,38 @@
+Column_Name,Description
+variant_id,Unique Identifier to identify a Car Variant
+model_id,Unique Identifier to identify a Car Model
+brand,"Brand Name of the Car Variant (e.g., Tata, Mahindra, Volkswagen)"
+model,"Model Name of the Car Variant (e.g., Tata Safari)"
+brief_info,Brief information of the Car Model
+body_type,"Body type of the Car Model (e.g., SUV, Sedan)"
+color_options,Color options of the Car Model
+variant,Variant Name of the Car Variant
+performance_and_fuel_economy_fuel_type,"Fuel Type of the Car Variant (e.g., Petrol, Electric(Battery)"
+engine_and_transmission_engine_type,Engine Type of the Car Variant
+engine_and_transmission_10000_power,Power of the Car Variant
+engine_and_transmission_transmission,"Transmission Type of the Car Variant (e.g., Manual, Automatic)"
+engine_and_transmission_gearbox,"Gearbox of the Car Variant (e.g., 5-speed)"
+engine_and_transmission_drive_type,"Drive Type of the Car Variant (e.g., AWD, RWD)"
+performance_and_fuel_economy_mileage_arai,Mileage of the Car Variant
+comfort_and_convenience_parking_sensors,"Parking Sensors Availability in the Car Variant (e.g., Front, Rear)"
+safety_and_security_no_of_airbags,"Number of Airbags available in the Car Variant (e.g., 6,7)"
+comfort_and_convenience_connectivity,"Connectivity options available in the Car Variant (e.g., Android Auto, Apple CarPlay)"
+comfort_and_convenience_wireless_phone_charging,"Wireless Charging for phones availability in the Car Variant (e.g., Yes, No)"
+comfort_and_convenience_touch_screen_display,"Touch Screen Display availability in the Car Variant (e.g., Yes, No)"
+comfort_and_convenience_cruise_control,"Cruise Control availability in the Car Variant (e.g., Yes, No)"
+safety_and_security_hill_assist,"Hill Control Assist availability in the Car Variant (e.g., Yes, No)"
+safety_and_security_keyless_entry,"Keyless Entry availability in the Car Variant (e.g., Yes, No)"
+safety_and_security_heads_up_display_hud,"Heads Up Display availability in the Car Variant (e.g., Yes, No)"
+adas_feature_automatic_emergency_braking,"ADAS Automatic Emergency Braking availability in the Car Variant (e.g., Yes, No)"
+adas_feature_forward_collision_warning,"ADAS Forward Collision Warning availability in the Car Variant (e.g., Yes, No)"
+adas_feature_lane_departure_warning,"ADAS Lane Departure Warning availability in the Car Variant (e.g., Yes, No)"
+adas_feature_lane_keep_assist,"ADAS Lane Keep Assist  availability in the Car Variant (e.g., Yes, No)"
+adas_feature_adaptive_high_beam_assist,"ADAS Adaptive High beam assist availability in the Car Variant (e.g., Yes, No)"
+exterior_exterior_appearance_rain_sensing_wiper,"Rain Sensing Wiper availability in the Car Variant (e.g., Yes, No)"
+safety_and_security_hill_descent_control,"Hill Descent Control availability in the Car Variant (e.g., Yes, No)"
+comfort_and_convenience_sunroof,"Type of Sunroof available in the Car Variant (e.g., Panoramic)"
+motor_range,Motor Range in case of Evs in the Car Variant
+motor_10000_power,Motor Power in case of Evs in the Car Variant
+charging_charging_time,Charging Time in case of Evs in the Car Variant
+comfort_and_convenience_autonomous_parking,"Autonomous parking in the Car Variant (e.g., Full, Semi)"
+car_price,Ex-showroom price of the Car Variant

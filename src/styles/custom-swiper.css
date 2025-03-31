@@ -1,0 +1,21 @@
+/* 🔹 Pagination Dots */
+.custom-swiper .swiper-pagination-bullet {
+  background-color: #575757; /* Default dot color */
+  width: 10px;
+  height: 10px;
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🔹 Active Dot */
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: #0a9396; /* Change to custom color */
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+}
+
+/* 🔹 Hover Effect */
+.custom-swiper .swiper-pagination-bullet:hover {
+  transform: scale(1.2);
+}
