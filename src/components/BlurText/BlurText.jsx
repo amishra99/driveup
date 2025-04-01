@@ -5,22 +5,20 @@ const BlurText = ({
   text = "",
   delay = 200,
   className = "",
-  animateBy = "words",
-  direction = "top",
+  animateBy = "words", // 'words' or 'letters'
+  direction = "top", // 'top' or 'bottom'
   threshold = 0.1,
   rootMargin = "0px",
-  animationFrom = undefined, // ✅ Added default
-  animationTo = undefined, // ✅ Added default
   easing = "easeOutCubic",
-  onAnimationComplete = undefined, // Optional too
+  onAnimationComplete,
 }) => {
   const elements = animateBy === "words" ? text.split(" ") : text.split("");
   const [inView, setInView] = useState(false);
   const ref = useRef();
   const animatedCount = useRef(0);
 
-  // Default animations based on direction
-  const defaultFrom =
+  // ✅ Define default animations directly inside component
+  const animationFrom =
     direction === "top"
       ? {
           filter: "blur(10px)",
@@ -33,14 +31,18 @@ const BlurText = ({
           transform: "translate3d(0,50px,0)",
         };
 
-  const defaultTo = [
+  const animationTo = [
     {
       filter: "blur(5px)",
       opacity: 0.5,
       transform:
         direction === "top" ? "translate3d(0,5px,0)" : "translate3d(0,-5px,0)",
     },
-    { filter: "blur(0px)", opacity: 1, transform: "translate3d(0,0,0)" },
+    {
+      filter: "blur(0px)",
+      opacity: 1,
+      transform: "translate3d(0,0,0)",
+    },
   ];
 
   useEffect(() => {
@@ -62,10 +64,10 @@ const BlurText = ({
   const springs = useSprings(
     elements.length,
     elements.map((_, i) => ({
-      from: animationFrom || defaultFrom,
+      from: animationFrom,
       to: inView
         ? async (next) => {
-            for (const step of animationTo || defaultTo) {
+            for (const step of animationTo) {
               await next(step);
             }
             animatedCount.current += 1;
@@ -76,7 +78,7 @@ const BlurText = ({
               onAnimationComplete();
             }
           }
-        : animationFrom || defaultFrom,
+        : animationFrom,
       delay: i * delay,
       config: { easing },
     }))
