@@ -6,11 +6,14 @@ import ShinyText from "@/components/ShinyText/ShinyText";
 import { LoginForm } from "@/components/login-form";
 import { motion } from "framer-motion";
 import { useModal } from "@/components/ui/animated-modal";
-import Link from "next/link";
 
 export default function Home() {
   const { setOpen } = useModal(); // ✅ Access modal state
   const currentYear = new Date().getFullYear(); // ✅ Dynamic Year
+
+  const handleAnimationComplete = () => {
+    console.log("Animation completed!");
+  };
 
   return (
     <>
@@ -86,10 +89,8 @@ export default function Home() {
                 delay={100}
                 animateBy="words"
                 direction="top"
+                onAnimationComplete={handleAnimationComplete}
                 className="text-5xl sm:text-5xl mb-8 text-[#E9D8A6] tracking-wide"
-                animationFrom={{ opacity: 0, y: -20 }} // 👈 customize as per your animation style
-                animationTo={{ opacity: 1, y: 0 }}
-                onAnimationComplete={() => {}} // 👈 can be a no-op if not needed
               />
             </h1>
           </div>
@@ -101,10 +102,8 @@ export default function Home() {
                 delay={60}
                 animateBy="words"
                 direction="top"
+                onAnimationComplete={handleAnimationComplete}
                 className="text-lg sm:text-xl mb-8"
-                animationFrom={{ opacity: 0, y: -20 }} // 👈 customize as per your animation style
-                animationTo={{ opacity: 1, y: 0 }}
-                onAnimationComplete={() => {}} // 👈 can be a no-op if not needed
               />
             </h2>
           </div>
