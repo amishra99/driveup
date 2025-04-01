@@ -87,6 +87,9 @@ export default function Home() {
                 animateBy="words"
                 direction="top"
                 className="text-5xl sm:text-5xl mb-8 text-[#E9D8A6] tracking-wide"
+                animationFrom={{ opacity: 0, y: -20 }} // 👈 customize as per your animation style
+                animationTo={{ opacity: 1, y: 0 }}
+                onAnimationComplete={() => {}} // 👈 can be a no-op if not needed
               />
             </h1>
           </div>
@@ -99,6 +102,9 @@ export default function Home() {
                 animateBy="words"
                 direction="top"
                 className="text-lg sm:text-xl mb-8"
+                animationFrom={{ opacity: 0, y: -20 }} // 👈 customize as per your animation style
+                animationTo={{ opacity: 1, y: 0 }}
+                onAnimationComplete={() => {}} // 👈 can be a no-op if not needed
               />
             </h2>
           </div>
