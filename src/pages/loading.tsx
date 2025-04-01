@@ -70,11 +70,11 @@ const LoadingPage = () => {
       </motion.div>
 
       {/* 🔹 Animated Header Text Change (Appears Early at 3s) */}
-      <div className="mt-2 h-[60px] ml-4 mr-4 flex items-center justify-center">
+      <div className="mt-2 h-[60px] ml-4 mr-4 mb-4 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.h1
             key={showSecondHeader ? "second-header" : "first-header"}
-            className="text-4xl tracking-wide ml-4 mr-4 mt-4 mb-2 sm:text-4xl font-bold text-[#E9D8A6]"
+            className="text-4xl tracking-wide ml-4 mr-4 mt-4 mb-4 sm:text-4xl font-bold text-[#E9D8A6]"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
