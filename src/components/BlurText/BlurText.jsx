@@ -5,14 +5,14 @@ const BlurText = ({
   text = "",
   delay = 200,
   className = "",
-  animateBy = "words", // 'words' or 'letters'
-  direction = "top", // 'top' or 'bottom'
+  animateBy = "words",
+  direction = "top",
   threshold = 0.1,
   rootMargin = "0px",
-  animationFrom,
-  animationTo,
+  animationFrom = undefined, // ✅ Added default
+  animationTo = undefined, // ✅ Added default
   easing = "easeOutCubic",
-  onAnimationComplete,
+  onAnimationComplete = undefined, // Optional too
 }) => {
   const elements = animateBy === "words" ? text.split(" ") : text.split("");
   const [inView, setInView] = useState(false);
@@ -51,7 +51,7 @@ const BlurText = ({
           observer.unobserve(ref.current);
         }
       },
-      { threshold, rootMargin },
+      { threshold, rootMargin }
     );
 
     observer.observe(ref.current);
@@ -79,7 +79,7 @@ const BlurText = ({
         : animationFrom || defaultFrom,
       delay: i * delay,
       config: { easing },
-    })),
+    }))
   );
 
   return (
