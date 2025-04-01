@@ -55,194 +55,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Head from "next/head";
 
-/*const cars = [
-  {
-    id: 1,
-    model: "BMW i4 M50 xDrive",
-    price: 9389999,
-    brand: "BMW",
-    fuel: "Petrol",
-    hp: "200HP",
-    cc: "1197 cc",
-    brochure:
-      "https://img.gaadicdn.com/brochures/files/BMW-X5/xDrive30d-M-Sport/1691835915893/bmw-x5-diseal.pdf",
-    type: "SUV",
-    rating: 4.4,
-    primaryimage:
-      "https://media.zigcdn.com/media/model/2025/Jan/bmw_x3_360x240.jpg",
-    images: [
-      "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    ],
-    description:
-      "BMW X3 is a 5-seater SUV car with price starting from Rs. 75.80 lakh. The car is available in petrol automatic and diesel automatic configurations in 5 colours and 2 variants. The car is offered with 2 liter diesel & 2 liter petrol engines. X3 has petrol mileage of 13.38 and diesel mileage of 17.86 kmpl. ",
-    features: [
-      {
-        category: "Engine & Transmission",
-        list: [
-          { name: "Battery Capacity", value: "83.9 kWh" },
-          { name: "Max Power", value: "653HP" },
-          { name: "Transmission", value: "Automatic" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    model: "BMW 3 Series Gran Limousine",
-    price: 9389999,
-    brand: "BMW",
-    fuel: "Hybrid",
-    hp: "200HP",
-    cc: "1197 cc",
-    brochure:
-      "https://img.gaadicdn.com/brochures/files/BMW-X5/xDrive30d-M-Sport/1691835915893/bmw-x5-diseal.pdf",
-    type: "Sedan",
-    rating: 4.4,
-    primaryimage:
-      "https://media.zigcdn.com/media/model/2025/Jan/bmw_x3_360x240.jpg",
-    images: [
-      "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    ],
-    description:
-      "BMW X3 is a 5-seater SUV car with price starting from Rs. 75.80 lakh. The car is available in petrol automatic and diesel automatic configurations in 5 colours and 2 variants. The car is offered with 2 liter diesel & 2 liter petrol engines. X3 has petrol mileage of 13.38 and diesel mileage of 17.86 kmpl.",
-    features: [
-      {
-        category: "Engine & Transmission",
-        list: [
-          { name: "Battery Capacity", value: "83.9 kWh" },
-          { name: "Max Power", value: "653HP" },
-          { name: "Transmission", value: "Automatic" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    model: "BMW M4 Competition",
-    price: 9389999,
-    brand: "BMW",
-    fuel: "Petrol",
-    hp: "200HP",
-    cc: "1197 cc",
-    brochure:
-      "https://img.gaadicdn.com/brochures/files/BMW-X5/xDrive30d-M-Sport/1691835915893/bmw-x5-diseal.pdf",
-    type: "SUV",
-    rating: 3.8,
-    primaryimage:
-      "https://media.zigcdn.com/media/model/2025/Jan/bmw_x3_360x240.jpg",
-    images: [
-      "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    ],
-    description:
-      "BMW X3 is a 5-seater SUV car with price starting from Rs. 75.80 lakh. The car is available in petrol automatic and diesel automatic configurations in 5 colours and 2 variants. The car is offered with 2 liter diesel & 2 liter petrol engines. X3 has petrol mileage of 13.38 and diesel mileage of 17.86 kmpl.",
-    features: [
-      {
-        category: "Engine & Transmission",
-        list: [
-          { name: "Battery Capacity", value: "83.9 kWh" },
-          { name: "Max Power", value: "653HP" },
-          { name: "Transmission", value: "Automatic" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 4,
-    model: "BMW 7 Series",
-    price: 9389999,
-    brand: "BMW",
-    fuel: "Electric",
-    hp: "200HP",
-    cc: "1197 cc",
-    brochure:
-      "https://img.gaadicdn.com/brochures/files/BMW-X5/xDrive30d-M-Sport/1691835915893/bmw-x5-diseal.pdf",
-    type: "Hatchback",
-    rating: 4,
-    primaryimage:
-      "https://media.zigcdn.com/media/model/2025/Jan/bmw_x3_360x240.jpg",
-    images: [
-      "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    ],
-    description:
-      "BMW X3 is a 5-seater SUV car with price starting from Rs. 75.80 lakh. The car is available in petrol automatic and diesel automatic configurations in 5 colours and 2 variants. The car is offered with 2 liter diesel & 2 liter petrol engines. X3 has petrol mileage of 13.38 and diesel mileage of 17.86 kmpl.",
-    features: [
-      {
-        category: "Engine & Transmission",
-        list: [
-          { name: "Battery Capacity", value: "83.9 kWh" },
-          { name: "Max Power", value: "653HP" },
-          { name: "Transmission", value: "Automatic" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-      {
-        category: "Brakes & Suspension",
-        list: [
-          { name: "Front Brake Type", value: "Disc" },
-          { name: "Rear Brake Type", value: "Disc" },
-          { name: "Suspension", value: "Adaptive Air Suspension" },
-        ],
-      },
-    ],
-  },
-  // Add more cars as needed
-];*/
-
 const brands = [
   "Aston Martin",
   "Audi",
@@ -283,7 +95,26 @@ const brands = [
 const bodyTypes = ["Sedan", "SUV", "Hatchback", "Luxury"];
 const fuelTypes = ["Electric", "Hybrid"];
 
-const CarCard = ({ car }) => {
+type Car = {
+  model_id: string;
+  model: string;
+  brand: string;
+  body_type: string;
+  primary_image_url: string;
+  secondary_image_urls: string[]; // assuming array
+  brochure_url: string;
+  color_options: string[]; // assuming array
+  color_image_urls: string[]; // assuming array
+  brief_info: string;
+  rating: number;
+  fuel_options: string;
+  fuel: string;
+  hp: string;
+  cc: string;
+  starting_price: number;
+};
+
+const CarCard = ({ car }: { car: Car }) => {
   const [favorites, setFavorites] = useState<string[]>([]); // Store model IDs
   const [user, setUser] = useState<any>(null);
 
@@ -305,8 +136,8 @@ const CarCard = ({ car }) => {
     return () => unsubscribe(); // ✅ Clean up listener on unmount
   }, [auth.currentUser]); // ✅ Runs once when user logs in
 
-  const toggleFavorite = async (carId) => {
-    if (!user) {
+  const toggleFavorite = async (carId: string) => {
+    if (!user || !auth.currentUser) {
       toast.error("You need to be logged in to favorite cars.");
       return;
     }
@@ -321,7 +152,9 @@ const CarCard = ({ car }) => {
         const currentFavorites = userData.favorites || [];
 
         if (currentFavorites.includes(carId)) {
-          updatedFavorites = currentFavorites.filter((id) => id !== carId); // ✅ Remove Favorite
+          updatedFavorites = currentFavorites.filter(
+            (model_id: string) => model_id !== carId
+          );
         } else {
           updatedFavorites = [...currentFavorites, carId]; // ✅ Add Favorite
         }
@@ -673,9 +506,17 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
+type PriceFilterProps = {
+  minPrice: number;
+  maxPrice: number;
+  setPriceRange: (range: number[]) => void;
+};
 
-
-const PriceFilter = ({ minPrice, maxPrice, setPriceRange }) => (
+const PriceFilter = ({
+  minPrice,
+  maxPrice,
+  setPriceRange,
+}: PriceFilterProps) => (
   <div className="w-60 flex flex-col gap-3 p-3 rounded-lg">
     <span className="text-[#E9D8A6] text-sm font-semibold">Price Range</span>
     <Slider
@@ -683,7 +524,11 @@ const PriceFilter = ({ minPrice, maxPrice, setPriceRange }) => (
       min={200000}
       max={50000000}
       defaultValue={[minPrice, maxPrice]}
-      onChange={setPriceRange}
+      onChange={(value) => {
+        if (Array.isArray(value)) {
+          setPriceRange(value);
+        }
+      }}
       trackStyle={[{ backgroundColor: "#0A9396", height: "4px" }]}
       handleStyle={[
         {
@@ -708,7 +553,12 @@ const PriceFilter = ({ minPrice, maxPrice, setPriceRange }) => (
   </div>
 );
 
-const SearchBar = ({ searchQuery, setSearchQuery }) => {
+type SearchBarProps = {
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
+};
+
+const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
   const [showSearchInput, setShowSearchInput] = useState(false);
 
   const handleSearch = () => {
@@ -777,8 +627,8 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState("Mercedes Benz");
-  const [selectedFuel, setSelectedFuel] = useState(null);
-  const [selectedbody, setselectedbody] = useState(null);
+  const [selectedFuel, setSelectedFuel] = useState<string | null>(null);
+  const [selectedbody, setselectedbody] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState([200000, 50000000]);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const router = useRouter();
@@ -786,7 +636,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [scrollProgress, setScrollProgress] = useState(100);
   const scrollContainerRef = useRef(null);
-  const [selectedCar, setSelectedCar] = useState(null);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [favorites, setFavorites] = useState<string[]>([]); // Store model IDs
@@ -810,8 +660,8 @@ const App = () => {
     return () => unsubscribe(); // ✅ Clean up listener on unmount
   }, [auth.currentUser]); // ✅ Runs once when user logs in
 
-  const toggleFavorite = async (carId) => {
-    if (!user) {
+  const toggleFavorite = async (carId: string) => {
+    if (!user || !auth.currentUser) {
       toast.error("You need to be logged in to favorite cars.");
       return;
     }
@@ -826,7 +676,9 @@ const App = () => {
         const currentFavorites = userData.favorites || [];
 
         if (currentFavorites.includes(carId)) {
-          updatedFavorites = currentFavorites.filter((id) => id !== carId); // ✅ Remove Favorite
+          updatedFavorites = currentFavorites.filter(
+            (model_id: string) => model_id !== carId
+          );
         } else {
           updatedFavorites = [...currentFavorites, carId]; // ✅ Add Favorite
         }
@@ -872,13 +724,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (router.query.id) {
-      const car = cars.find((car) => car.id === parseInt(router.query.id));
-      setSelectedCar(car);
-    }
-  }, [router.query.id]);
-
-  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         // ✅ FIX: Redirect only if not already on login page
@@ -915,8 +760,8 @@ const App = () => {
   const rating = selectedCar?.rating; // 🔥 Dynamic rating (Change this value as needed)
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const [carModels, setCarModels] = useState([]);
-  const [filteredCars, setFilteredCars] = useState([]);
+  const [carModels, setCarModels] = useState<Car[]>([]);
+  const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true); // ✅ Add Loading State
 
   useEffect(() => {
@@ -942,8 +787,25 @@ const App = () => {
     </div>
   );
 
-  const [variants, setVariants] = useState([]);
-  const [selectedVariant, setSelectedVariant] = useState(null);
+  type CarVariant = {
+    variant_id: string;
+    variant: string;
+    specifications: Record<string, any>; // or define the shape if known
+    prices: {
+      [city: string]: {
+        on_road_price: string; // or number
+        ex_showroom_price: string;
+        rto_others: string;
+        insurance: string;
+        // other fields
+      };
+    };
+  };
+
+  const [variants, setVariants] = useState<CarVariant[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<CarVariant | null>(
+    null
+  );
 
   const filteredFeatures =
     selectedVariant?.specifications &&
@@ -1026,16 +888,18 @@ const App = () => {
     }
   }, [selectedCar, variants]);
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const slider = scrollRef.current;
+    if (!slider) return;
+
     let isDown = true;
     let startX = e.pageX - slider.offsetLeft;
     let scrollLeft = slider.scrollLeft;
 
-    const handleMouseMove = (event) => {
-      if (!isDown) return;
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!isDown || !slider) return;
       event.preventDefault();
       const x = event.pageX - slider.offsetLeft;
       const walk = (x - startX) * 2; // Adjust speed factor
@@ -1054,28 +918,43 @@ const App = () => {
 
   const currentYear = new Date().getFullYear(); // ✅ Dynamic Year
 
-  const [compareCars, setCompareCars] = useState([]); // Cars selected for comparison
+  const [compareCars, setCompareCars] = useState<string[]>([]); // ✅ Explicitly typed
   const [comparisonData, setComparisonData] = useState([]); // Full data for selected cars
   const [showComparison, setShowComparison] = useState(false); // Toggle Comparison View
-  const [comparisonCars, setComparisonCars] = useState([]);
+  const [comparisonCars, setComparisonCars] = useState<Car[]>([]);
 
   const MAX_COMPARE_CARS = 3; // 🔹 Set Maximum Cars to Compare
 
-  const ComparisonTable = ({ cars }) => {
-    const [selectedVariants, setSelectedVariants] = useState({});
-    const [variantOptions, setVariantOptions] = useState({});
+  type Specifications = {
+    [category: string]: {
+      [specName: string]: string;
+    };
+  };
+
+  type ComparisonTableProps = {
+    cars: Car[];
+  };
+
+  const ComparisonTable = ({ cars }: ComparisonTableProps) => {
+    const [selectedVariants, setSelectedVariants] = useState<{
+      [modelId: string]: CarVariant;
+    }>({});
+
+    const [variantOptions, setVariantOptions] = useState<{
+      [modelId: string]: CarVariant[];
+    }>({});
 
     // 🔹 Fetch variants for each car when the component loads
     useEffect(() => {
       const fetchVariants = async () => {
-        const variantData = {};
-        const selectedData = {};
+        const variantData: Record<string, CarVariant[]> = {}; // ✅ type added
+        const selectedData: Record<string, CarVariant> = {}; // ✅ type added
 
         for (const car of cars) {
           const res = await fetch(
             `/api/cars/variant-details?model_id=${car.model_id}`
           );
-          const data = await res.json();
+          const data: CarVariant[] = await res.json();
 
           if (data.length > 0) {
             variantData[car.model_id] = data; // Store all variants
@@ -1090,8 +969,13 @@ const App = () => {
       fetchVariants();
     }, [cars]);
 
+    const allCategories: {
+      [category: string]: {
+        [specName: string]: Set<string>;
+      };
+    } = {};
+
     // 🔹 Collect specifications grouped by category
-    const allCategories = {};
     Object.values(selectedVariants).forEach((variant) => {
       if (variant?.specifications) {
         Object.entries(variant.specifications).forEach(([category, specs]) => {
@@ -1100,7 +984,7 @@ const App = () => {
             if (!allCategories[category][spec])
               allCategories[category][spec] = new Set();
             allCategories[category][spec].add(
-              value?.toLowerCase().trim() || "-"
+              typeof value === "string" ? value.toLowerCase().trim() : "-"
             );
           });
         });
@@ -1226,8 +1110,8 @@ const App = () => {
     );
   }, [favorites]);
 
-  const toggleComparison = (car) => {
-    setComparisonCars((prev) => {
+  const toggleComparison = (car: Car) => {
+    setComparisonCars((prev: Car[]) => {
       const isAlreadyAdded = prev.some((c) => c.model_id === car.model_id);
 
       if (isAlreadyAdded) {
@@ -1424,9 +1308,8 @@ const App = () => {
                       <SkeletonCard key={index} />
                     ))
                   : // ✅ Show Actual Cars Once API Loads
-                    filteredCars.map((car) => (
+                    filteredCars.map((car: Car) => (
                       <div
-                        key={car.id}
                         onClick={() => setSelectedCar(car)} // ✅ Clicking on the Card should open details
                         className="cursor-pointer"
                       >
@@ -1784,7 +1667,6 @@ const App = () => {
                     <h2 className="text-xl font-bold text-[#E9D8A6] mb-4">
                       Specifications
                     </h2>
-                    {/* 🔹 Variant Dropdown (Newly Added) */}
                     {/* Variant Dropdown */}
                     <div className="mt-4">
                       <h2 className="text-sm font-bold text-gray-400 mb-2">
@@ -1837,26 +1719,31 @@ const App = () => {
                           No matching features found.
                         </p>
                       ) : (
-                        filteredFeatures.map((section, index) => (
-                          <div key={index} className="mb-6">
-                            <h3 className="text-lg font-semibold text-gray-300 sticky top-0 bg-[#2a2a2a] py-2">
-                              {section.category}
-                            </h3>
-                            <ul className="text-gray-400 text-sm space-y-2 mt-2">
-                              {section.list.map((feature, idx) => (
-                                <li
-                                  key={idx}
-                                  className="flex justify-between hover:bg-[#303030] p-2 rounded-md text-xs sm:text-xs lg:text-sm"
-                                >
-                                  {feature.name}
-                                  <span className="font-semibold text-white text-xs sm:text-xs lg:text-sm text-right">
-                                    {feature.value}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))
+                        filteredFeatures.map((section, index) => {
+                          if (!section) return null; // ✅ Early return if section is null
+
+                          return (
+                            <div key={index} className="mb-6">
+                              <h3 className="text-lg font-semibold text-gray-300 sticky top-0 bg-[#2a2a2a] py-2">
+                                {section.category}
+                              </h3>
+                              <ul className="text-gray-400 text-sm space-y-2 mt-2">
+                                {section.list.map((feature, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="flex justify-between hover:bg-[#303030] p-2 rounded-md text-xs sm:text-xs lg:text-sm"
+                                  >
+                                    {feature.name}
+                                    <span className="font-semibold text-white text-xs sm:text-xs lg:text-sm text-right">
+                                      {String(feature.value)}{" "}
+                                      {/* ✅ Safe render */}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        })
                       )}
                     </div>
                   </div>
