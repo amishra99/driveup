@@ -68,7 +68,7 @@ export default function Home() {
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
         >
-          <div className="fixed w-screen top-2 left-1/2 -translate-x-1/2 flex justify-center z-50 bg-[#0a0a0a]">
+          <div className="fixed w-screen top-2 left-1/2 -translate-x-1/2 flex justify-center z-50">
             <Image
               src="/driveup_logo_white.png"
               alt="DriveUp logo"
