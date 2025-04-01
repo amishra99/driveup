@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Lottie from "react-lottie-player";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import carLoadingAnimation from "@/components/loadingCarAnimation.json";
+
+// ✅ This ensures Lottie is only rendered on the client
+const Lottie = dynamic(() => import("react-lottie-player"), {
+  ssr: false,
+});
 
 // 🔹 Import Lottie animation JSON (Replace with your animation)
-import carLoadingAnimation from "@/components/loadingCarAnimation.json";
 
 const LoadingPage = () => {
   const router = useRouter();
