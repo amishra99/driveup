@@ -1400,7 +1400,7 @@ const App = () => {
                 ← Back
               </button>
 
-              <div className="bg-[#2a2a2a] border-0 rounded-lg p-8">
+              <div className="bg-[#2a2a2a] border-0 rounded-lg p-4 lg:p-8">
                 <div className="flex justify-between items-start mb-8">
                   <div className="flex items-center gap-4">
                     <div>
@@ -1578,19 +1578,22 @@ const App = () => {
                         <Star className="w-5 h-5" />
                       </button>
                     </div>
-                    <h2 className="text-xl font-bold mb-4 text-white">
+                    <h2 className="text-base lg:text-xl font-bold mb-4 text-white">
                       Key Features
                     </h2>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="bg-[#404040] p-4 rounded-xl text-center">
                         <Fuel className="h-5 w-5 sm:h-5 sm:w-5 md:h-8 md:w-8 mx-auto mb-2 text-gray-400" />
-                        <p className="text-sm text-gray-400">
+                        <p
+                          className="text-xs lg:text-sm text-gray-400 truncate max-w-full"
+                          title={selectedCar.fuel_options}
+                        >
                           {selectedCar.fuel_options}
                         </p>
                       </div>
                       <div className="bg-[#404040] p-4 rounded-xl text-center">
                         <Zap className="h-5 w-5 sm:h-5 sm:w-5 md:h-8 md:w-8 mx-auto mb-2 text-gray-400" />
-                        <p className="text-sm text-gray-400">
+                        <p className="text-xs lg:text-sm text-gray-400">
                           {" "}
                           {selectedCar.hp.toLowerCase() === "electric"
                             ? selectedCar.hp
@@ -1599,7 +1602,7 @@ const App = () => {
                       </div>
                       <div className="bg-[#404040] p-4 rounded-xl text-center">
                         <Cog className="h-5 w-5 sm:h-5 sm:w-5 md:h-8 md:w-8 mx-auto mb-2 text-gray-400" />
-                        <p className="text-sm text-gray-400">
+                        <p className="text-xs lg:text-sm text-gray-400">
                           {" "}
                           {selectedCar.cc.toLowerCase() === "electric"
                             ? selectedCar.cc
@@ -1608,13 +1611,15 @@ const App = () => {
                       </div>
                     </div>
 
-                    <h2 className="text-xl font-bold mt-8 mb-4 text-white">
+                    <h2 className="text-base lg:text-xl font-bold mt-8 mb-4 text-white">
                       Car Description
                     </h2>
-                    <p className="text-gray-400">{selectedCar.brief_info}</p>
+                    <p className="text-sm lg:text-base text-gray-400">
+                      {selectedCar.brief_info}
+                    </p>
                     {/* 🔹 Color Options Section (Better UI) */}
                     <div className="mt-6">
-                      <h2 className="text-xl font-bold mb-4 text-white">
+                      <h2 className="text-base lg:text-xl font-bold mb-4 text-white">
                         Available Colors
                       </h2>
                       <div
@@ -1662,23 +1667,23 @@ const App = () => {
                   </div>
 
                   {/* 🔹 Right Side: Scrollable Features List with Search & Filter */}
-                  <div className="relative p-6 rounded-lg bg-[#2a2a2a] shadow-md border border-gray-600">
+                  <div className="relative p-4 lg:p-6 rounded-lg bg-[#2a2a2a] shadow-md border border-gray-600">
                     {/* Animated Scroll Progress Bar */}
                     <motion.div
                       className="absolute top-0 left-0 h-[3px] bg-[#0A9396] rounded-lg"
                       style={{ width: `${scrollProgress}%` }}
                     />
 
-                    <h2 className="text-xl font-bold text-[#E9D8A6] mb-4">
+                    <h2 className="text-md lg:text-xl font-bold text-[#E9D8A6] mb-4">
                       Specifications
                     </h2>
                     {/* Variant Dropdown */}
                     <div className="mt-4">
-                      <h2 className="text-sm font-bold text-gray-400 mb-2">
+                      <h2 className="text-xs lg:text-sm font-bold text-gray-400 mb-2">
                         Select Variant
                       </h2>
                       <select
-                        className="w-full px-4 py-2 bg-[#333] text-white rounded-lg border border-gray-700 outline-none cursor-pointer"
+                        className="w-full px-4 py-2 bg-[#333] text-white rounded-lg border border-gray-700 outline-none cursor-pointer text-xs lg:text-base"
                         value={selectedVariant?.variant_id || ""}
                         onChange={(e) => {
                           const selected = variants.find(
@@ -1711,7 +1716,7 @@ const App = () => {
                       placeholder="Search features"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full mt-4 mb-4 px-4 py-2 bg-[#333] text-white rounded-lg outline-none border border-gray-700"
+                      className="w-full mt-4 mb-4 px-4 py-2 bg-[#333] text-white rounded-lg outline-none border border-gray-700 text-xs lg:text-base"
                     />
 
                     {/* Features List */}
@@ -1720,7 +1725,7 @@ const App = () => {
                       ref={scrollContainerRef}
                     >
                       {filteredFeatures.length === 0 ? (
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 text-xs lg:text-sm">
                           No matching features found.
                         </p>
                       ) : (
@@ -1729,7 +1734,7 @@ const App = () => {
 
                           return (
                             <div key={index} className="mb-6">
-                              <h3 className="text-lg font-semibold text-gray-300 sticky top-0 bg-[#2a2a2a] py-2">
+                              <h3 className="text-base lg:text-lg font-semibold text-gray-300 sticky top-0 bg-[#2a2a2a] py-2">
                                 {section.category}
                               </h3>
                               <ul className="text-gray-400 text-sm space-y-2 mt-2">
@@ -1739,7 +1744,7 @@ const App = () => {
                                     className="flex justify-between hover:bg-[#303030] p-2 rounded-md text-xs sm:text-xs lg:text-sm"
                                   >
                                     {feature.name}
-                                    <span className="font-semibold text-white text-xs sm:text-xs lg:text-sm text-right">
+                                    <span className="lg:font-semibold text-white text-xs sm:text-xs lg:text-sm text-right">
                                       {String(feature.value)}{" "}
                                       {/* ✅ Safe render */}
                                     </span>
