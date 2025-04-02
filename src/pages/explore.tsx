@@ -232,7 +232,12 @@ const CarCard = ({ car }: { car: Car }) => {
       <div className="grid grid-cols-3 gap-2">
         <div className="feature-badge p-2 text-center bg-white/10 rounded-lg">
           <Fuel className="mb-1 mx-auto text-gray-400" />
-          <p className="text-xs text-gray-400">{car.fuel_options}</p>
+          <p
+            className="text-xs text-gray-400 truncate max-w-full"
+            title={car.fuel_options}
+          >
+            {car.fuel_options}
+          </p>
         </div>
         <div className="feature-badge p-2 text-center bg-white/10 rounded-lg">
           <Zap className="mb-1 mx-auto text-gray-400" />
