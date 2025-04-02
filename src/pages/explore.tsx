@@ -523,7 +523,9 @@ const PriceFilter = ({
   setPriceRange,
 }: PriceFilterProps) => (
   <div className="w-60 flex flex-col gap-3 p-3 rounded-lg">
-    <span className="text-[#E9D8A6] text-sm font-semibold">Price Range</span>
+    <span className="text-[#E9D8A6] text-xs lg:text-sm font-semibold">
+      Price Range
+    </span>
     <Slider
       range
       min={200000}
@@ -1180,7 +1182,10 @@ const App = () => {
                     </div>
                     {showSearchInput ? (
                       <button
-                        onClick={() => setShowFavorites((prev) => !prev)}
+                        onClick={(e) => {
+                          setShowFavorites((prev) => !prev);
+                          e.currentTarget.blur(); // ✅ Remove focus after click
+                        }}
                         className={`px-6 py-2 transition-all rounded flex items-center gap-2 ${
                           showFavorites
                             ? "bg-[#0A9396] text-white hover:bg-[#00796B]"
@@ -1196,7 +1201,10 @@ const App = () => {
                             ? "bg-[#0A9396] text-white"
                             : "bg-[#EE9B00] text-black"
                         } hover:bg-white transition-all duration-300 sm:hidden w-full flex items-center gap-2`}
-                        onClick={() => setShowFavorites((prev) => !prev)} // ✅ Toggle favorite filter
+                        onClick={(e) => {
+                          setShowFavorites((prev) => !prev);
+                          e.currentTarget.blur(); // ✅ Remove focus after click
+                        }}
                       >
                         <Star className="w-5 h-5" />
                       </Button>
@@ -1210,6 +1218,7 @@ const App = () => {
                   {!showFavorites && (
                     <div className="relative w-60">
                       <Select
+                        className="text-xs lg:text-sm"
                         options={brands.map((brand) => ({
                           label: brand,
                           value: brand,
@@ -1264,14 +1273,15 @@ const App = () => {
                       <Button
                         key={index}
                         variant="ghost"
-                        className={`px-6 py-2 bg-[#94D2BD] rounded-full border-none ${
+                        className={`px-6 py-2 text-xs lg:text-sm bg-[#94D2BD] rounded-full border-none ${
                           selectedbody === body
                             ? "bg-[#005F73] text-white border-white"
                             : "text-black"
                         } hover:bg-white hover:text-black transition-all shadow-md`}
-                        onClick={() =>
-                          setselectedbody(selectedbody === body ? null : body)
-                        }
+                        onClick={(e) => {
+                          setselectedbody(selectedbody === body ? null : body);
+                          e.currentTarget.blur(); // ✅ removes focus after click
+                        }}
                       >
                         {body}
                       </Button>
@@ -1283,14 +1293,15 @@ const App = () => {
                       <Button
                         key={index}
                         variant="ghost"
-                        className={`px-6 py-2 bg-[#E9D8A6] rounded-full border-none ${
+                        className={`px-6 py-2 text-xs lg:text-sm bg-[#E9D8A6] rounded-full border-none ${
                           selectedFuel === fuel
                             ? "bg-[#BB3E03] text-white border-white"
                             : "text-black"
                         } hover:bg-white hover:text-black transition-all shadow-md`}
-                        onClick={() =>
-                          setSelectedFuel(selectedFuel === fuel ? null : fuel)
-                        }
+                        onClick={(e) => {
+                          setSelectedFuel(selectedFuel === fuel ? null : fuel);
+                          e.currentTarget.blur(); // ✅ removes focus after click
+                        }}
                       >
                         {fuel}
                       </Button>
