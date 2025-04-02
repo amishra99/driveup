@@ -318,7 +318,11 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
-
+const Footer = () => (
+  <footer className="bg-[#212121] text-gray-400 text-center p-6 mt-8 w-full">
+    <p>© {new Date().getFullYear()} DriveUp. All rights reserved.</p>
+  </footer>
+);
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -583,7 +587,7 @@ const App = () => {
                     <h4 className="text-sm font-semibold text-green-400 mb-2">
                       ✅ Do
                     </h4>
-                    <ul className="space-y-1 list-disc list-inside text-gray-300 text-sm leading-relaxed">
+                    <ul className="space-y-1 list-disc list-inside text-gray-300 text-xs lg:text-sm leading-relaxed">
                       <li>Ask clear, specific car-related questions</li>
                       <li>Mention the brand or model name</li>
                       <li>Use exact feature terms like “ADAS”, “Sunroof”</li>
@@ -595,7 +599,7 @@ const App = () => {
                     <h4 className="text-sm font-semibold text-red-400 mb-2">
                       🚫 Don’t
                     </h4>
-                    <ul className="space-y-1 list-disc list-inside text-gray-300 text-sm leading-relaxed">
+                    <ul className="space-y-1 list-disc list-inside text-gray-300 text-xs lg:text-sm leading-relaxed">
                       <li>
                         Ask overly general questions like “Which is the best
                         car?”
@@ -615,7 +619,7 @@ const App = () => {
                   <h4 className="text-sm font-semibold text-white mb-2">
                     Example Questions
                   </h4>
-                  <div className="bg-[#1f1f1f] p-4 rounded-lg border border-[#3d3d3d] space-y-1 text-sm text-gray-300">
+                  <div className="bg-[#1f1f1f] p-4 rounded-lg border border-[#3d3d3d] space-y-1 text-xs lg:text-sm text-gray-300">
                     <p>• Which Hyundai cars have ADAS?</p>
                     <p>• What is the mileage of Tata Nexon petrol?</p>
                     <p>• List SUVs with 6 airbags and a sunroof</p>
@@ -653,7 +657,7 @@ const App = () => {
             )}
 
             <div className="mt-20 mb-12 w-full">
-              <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+              <div className="w-full max-w-4xl mx-auto px-2 lg:px-6">
                 {/* Chat Messages */}
                 <div
                   className={`relative mt-6 bg-[#1f1f1f] p-4 sm:p-6 rounded-lg transition-all duration-300 ease-in-out ${
@@ -665,7 +669,7 @@ const App = () => {
                   }`}
                 >
                   {conversationHistory.length === 0 ? (
-                    <div className="relative bg-transparent text-sm text-center text-gray-500 py-11">
+                    <div className="relative bg-transparent text-xs lg:text-sm text-center text-gray-500 py-11">
                       {/* ℹ️ How to Use button */}
                       <button
                         onClick={() => setShowGuidelines(!showGuidelines)}
@@ -681,25 +685,27 @@ const App = () => {
                       to explore car insights!
                     </div>
                   ) : (
-                    conversationHistory.map((message: ChatMessage, index: number) => (
-                      <div key={index} className="mb-4">
-                        {message.role === "user" ? (
-                          <div className="text-right">
-                            <p className="text-xs text-gray-400">You</p>
-                            <div className="inline-block bg-[#0A9396] text-white p-3 rounded-lg max-w-[85%] sm:max-w-[80%] text-sm">
-                              {message.content}
+                    conversationHistory.map(
+                      (message: ChatMessage, index: number) => (
+                        <div key={index} className="mb-4">
+                          {message.role === "user" ? (
+                            <div className="text-right">
+                              <p className="text-xs text-gray-400">You</p>
+                              <div className="inline-block bg-[#0A9396] text-white p-3 rounded-lg max-w-[85%] sm:max-w-[80%] text-xs lg:text-sm">
+                                {message.content}
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="text-left">
-                            <p className="text-xs text-gray-400">DriveBot</p>
-                            <div className="inline-block bg-[#262626] text-white p-3 rounded-lg max-w-[85%] sm:max-w-[80%] text-sm">
-                              {message.content}
+                          ) : (
+                            <div className="text-left">
+                              <p className="text-xs text-gray-400">DriveBot</p>
+                              <div className="inline-block bg-[#262626] text-white p-3 rounded-lg max-w-[85%] sm:max-w-[80%] text-xs lg:text-sm">
+                                {message.content}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    ))
+                          )}
+                        </div>
+                      )
+                    )
                   )}
 
                   {/* Loading animation */}
@@ -738,7 +744,7 @@ const App = () => {
                 <div className="mt-4 bg-[#404040] p-4 sm:p-6 rounded-lg">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:space-x-4 space-y-3 sm:space-y-0">
                     <textarea
-                      className="flex-1 bg-transparent text-white border border-gray-700 rounded-md p-2 resize-none focus:outline-none focus:ring-1 focus:ring-[#0A9396] text-sm"
+                      className="flex-1 bg-transparent text-white border border-gray-700 rounded-md p-2 resize-none focus:outline-none focus:ring-1 focus:ring-[#0A9396] text-xs lg:text-sm"
                       rows={3}
                       placeholder="Ask me anything about cars. I know their secrets..."
                       value={userInput}
@@ -747,7 +753,7 @@ const App = () => {
                     <button
                       onClick={handleQuery}
                       disabled={loading}
-                      className="bg-[#0A9396] text-white px-4 py-2 rounded-md hover:bg-[#005F73] transition-colors text-sm w-full sm:w-auto"
+                      className="bg-[#0A9396] text-white px-4 py-2 rounded-md hover:bg-[#005F73] transition-colors text-xs lg:text-sm w-full sm:w-auto"
                     >
                       {loading ? "Sending..." : "Send"}
                     </button>
