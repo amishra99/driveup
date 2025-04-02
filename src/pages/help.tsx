@@ -338,7 +338,7 @@ const Footer = () => (
 );
 
 const categorizedFaqs = {
-  "About DriveUp": [
+  General: [
     {
       question: "What is DriveUp?",
       answer:
@@ -519,7 +519,7 @@ const App = () => {
   const currentYear = new Date().getFullYear(); // ✅ Dynamic Year
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("About DriveUp");
+  const [activeTab, setActiveTab] = useState("General");
 
   type Category = keyof typeof categorizedFaqs;
 
@@ -656,11 +656,11 @@ const App = () => {
                 back, every mile of the way.
               </p>
             </div>
-            <section className="w-full max-w-5xl mx-auto py-16 px-4 md:px-6">
-              <h2 className="text-center text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#0A9396] to-[#94D2BD] bg-clip-text text-transparent mb-4">
+            <section className="w-full max-w-5xl mx-auto py-16 px-2 lg:px-4 md:px-6">
+              <h2 className="text-center text-xl lg:text-4xl font-bold bg-gradient-to-r from-[#0A9396] to-[#94D2BD] bg-clip-text text-transparent mb-4">
                 Frequently Asked Questions
               </h2>
-              <p className="text-center text-gray-400 mb-10 max-w-2xl mx-auto text-sm md:text-base">
+              <p className="text-center text-gray-400 mb-10 max-w-2xl mx-auto text-xs lg:text-sm md:text-base">
                 Need help with something? Browse by category or search your
                 query below.
               </p>
@@ -671,7 +671,7 @@ const App = () => {
                   placeholder="Search FAQs..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-[#1e1e1e] border border-gray-700 placeholder:text-gray-500 text-white"
+                  className="bg-[#1e1e1e] border border-gray-700 placeholder:text-gray-500 text-white text-sm lg:text-base"
                 />
               </div>
 
@@ -683,12 +683,12 @@ const App = () => {
                 }}
                 className="w-full"
               >
-                <TabsList className="flex justify-center mb-10 bg-[#1a1a1a] rounded-full px-4 py-2 gap-2 shadow-sm">
+                <TabsList className="flex justify-center mb-10 bg-[#1a1a1a] rounded-full px-4 py-2 gap-2">
                   {Object.keys(categorizedFaqs).map((category) => (
                     <TabsTrigger
                       key={category}
                       value={category}
-                      className="rounded-full px-4 py-1.5 text-sm md:text-base font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#0A9396] data-[state=active]:to-[#94D2BD] data-[state=active]:text-black"
+                      className="rounded-full px-4 py-1.5 text-xs lg:text-sm md:text-base font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#0A9396] data-[state=active]:to-[#94D2BD] data-[state=active]:text-black"
                     >
                       {category}
                     </TabsTrigger>
@@ -705,11 +705,11 @@ const App = () => {
                             value={`faq-${index}`}
                             className="bg-[#1b1b1b] border border-gray-700 rounded-2xl shadow-md overflow-hidden transition-all hover:shadow-lg"
                           >
-                            <AccordionTrigger className="text-left text-base md:text-lg font-semibold px-6 py-4 [&>svg]:text-gray-400 hover:[&>svg]:text-white no-underline hover:no-underline focus:no-underline">
+                            <AccordionTrigger className="text-left text-xs lg:text-lg font-semibold px-6 py-4 [&>svg]:text-gray-400 hover:[&>svg]:text-white no-underline hover:no-underline focus:no-underline">
                               {faq.question}
                             </AccordionTrigger>
 
-                            <AccordionContent className="px-6 pb-6 text-gray-400 text-sm md:text-base leading-relaxed">
+                            <AccordionContent className="px-6 pb-6 text-gray-400 text-xs lg:text-base leading-relaxed">
                               {faq.answer}
                             </AccordionContent>
                           </AccordionItem>
@@ -752,7 +752,7 @@ const App = () => {
                   {/* Success Message */}
                   {isSubmitted ? (
                     <div className="text-center py-8">
-                      <h3 className="text-xl text-white font-semibold mb-2 mt-10">
+                      <h3 className="text-lg lg:text-xl text-white font-semibold mb-2 mt-10">
                         Thanks!
                       </h3>
                       <p className="text-gray-400">
@@ -763,7 +763,7 @@ const App = () => {
                   ) : (
                     <>
                       {formType === "contact" && (
-                        <div className="mt-10 bg-[#1b1b1b] p-8 rounded-xl border border-gray-700 shadow-lg relative">
+                        <div className="mt-10 bg-[#1b1b1b] p-6 lg:p-8 rounded-xl border border-gray-700 shadow-lg relative">
                           {/* Close Button */}
                           <button
                             onClick={closeForm}
@@ -773,10 +773,10 @@ const App = () => {
                           </button>
 
                           {/* Header */}
-                          <h3 className="text-2xl font-bold text-white mb-1">
+                          <h3 className="text-lg lg:text-2xl font-bold text-white mb-1 mt-4 lg:mt-0">
                             Let’s Connect
                           </h3>
-                          <p className="text-gray-400 text-sm mb-6">
+                          <p className="text-gray-400 text-xs lg:text-sm mb-6">
                             Have a question or need support? Fill out the form
                             and we’ll get back to you as soon as we can.
                           </p>
@@ -788,56 +788,56 @@ const App = () => {
                           >
                             {/* Name */}
                             <div className="relative">
-                              <Users className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Users className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="text"
                                 name="name"
                                 required
                                 placeholder="Your Name"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Email */}
                             <div className="relative">
-                              <Mail className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Mail className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="email"
                                 name="email"
                                 required
                                 placeholder="Email Address"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Phone */}
                             <div className="relative">
-                              <Phone className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Phone className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="tel"
                                 name="phone"
                                 required
                                 placeholder="Phone Number"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Message */}
                             <div className="relative">
-                              <MessageSquare className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <MessageSquare className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <textarea
                                 required
                                 name="message"
                                 rows={4}
                                 placeholder="Your Message"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Submit Button */}
                             <button
                               type="submit"
-                              className="bg-[#94D2BD] hover:bg-[#0A9396] text-black py-2 px-4 rounded-md text-sm font-medium transition-colors"
+                              className="bg-[#94D2BD] hover:bg-[#0A9396] text-black py-2 px-4 rounded-md text-xs lg:text-sm font-medium transition-colors"
                             >
                               Send Message
                             </button>
@@ -846,7 +846,7 @@ const App = () => {
                       )}
 
                       {formType === "feedback" && (
-                        <div className="mt-10 bg-[#1b1b1b] p-8 rounded-xl border border-gray-700 shadow-lg relative">
+                        <div className="mt-10 bg-[#1b1b1b] p-6 lg:p-8 rounded-xl border border-gray-700 shadow-lg relative">
                           {/* Close Button */}
                           <button
                             onClick={closeForm}
@@ -856,10 +856,10 @@ const App = () => {
                           </button>
 
                           {/* Header */}
-                          <h3 className="text-2xl font-bold text-white mb-1">
+                          <h3 className="text-lg lg:text-2xl font-bold text-white mb-1 mt-4 lg:mt-0">
                             We’d Love Your Feedback
                           </h3>
-                          <p className="text-gray-400 text-sm mb-6">
+                          <p className="text-gray-400 text-xs lg:text-sm mb-6">
                             Help us improve DriveUp — let us know what’s working
                             great and what could be better.
                           </p>
@@ -871,46 +871,46 @@ const App = () => {
                           >
                             {/* Name (Optional) */}
                             <div className="relative">
-                              <Users className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Users className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="text"
                                 name="name"
                                 placeholder="Your Name (Optional)"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Email */}
                             <div className="relative">
-                              <Mail className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Mail className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="email"
                                 name="email"
                                 required
                                 placeholder="Email Address"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Phone */}
                             <div className="relative">
-                              <Phone className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <Phone className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <input
                                 type="tel"
                                 name="phone"
                                 required
                                 placeholder="Phone Number"
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Feedback Category Dropdown */}
                             <div className="relative">
-                              <MessageSquare className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <MessageSquare className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <select
                                 name="category"
                                 required
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white appearance-none focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white appearance-none focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               >
                                 <option value="">
                                   What's your feedback about?
@@ -931,20 +931,20 @@ const App = () => {
 
                             {/* Feedback Message */}
                             <div className="relative">
-                              <MessageSquare className="absolute left-3 top-3.5 h-4 w-4 text-gray-500" />
+                              <MessageSquare className="absolute left-3 top-3 h-3 w-3 lg:h-4 lg:w-4 text-gray-500" />
                               <textarea
                                 name="message"
                                 required
                                 rows={4}
                                 placeholder="Share your thoughts..."
-                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-2 bg-[#27272a] border border-gray-700 rounded-md text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-white text-xs lg:text-base"
                               />
                             </div>
 
                             {/* Submit Button */}
                             <button
                               type="submit"
-                              className="bg-[#94D2BD] hover:bg-[#0A9396] text-black py-2 px-4 rounded-md text-sm font-medium transition-colors"
+                              className="bg-[#94D2BD] hover:bg-[#0A9396] text-black py-2 px-4 rounded-md text-xs lg:text-sm font-medium transition-colors"
                             >
                               Submit Feedback
                             </button>
