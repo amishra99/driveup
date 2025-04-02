@@ -532,7 +532,7 @@ const App = () => {
               </p>
             </div>
             <div className="flex justify-center mb-2">
-              <div className="inline-flex border border-zinc-700 rounded-lg bg-zinc-900 text-sm">
+              <div className="inline-flex border border-zinc-700 rounded-lg bg-zinc-900 text-xs lg:text-sm">
                 <button
                   onClick={() => setActiveTab("trend")}
                   className={`px-4 py-2 rounded-l-lg ${
@@ -557,30 +557,30 @@ const App = () => {
             </div>
 
             {activeTab === "trend" && (
-              <div className="px-4 py-8">
+              <div className="px-2 lg:px-4 py-8">
                 <FuelPriceChart city={city} setCity={setCity} />
               </div>
             )}
 
             {/* 🚗 Estimated Fuel Cost Calculator */}
             {activeTab === "calculator" && (
-              <div className="px-4 py-8 mt-2">
+              <div className="px-2 lg:px-4 py-8 mt-2">
                 <Card className="bg-[#1f1f1f] shadow-sm border-zinc-700 rounded-lg">
                   <CardHeader className="px-6 pt-6 pb-4">
-                    <CardTitle className="text-xl text-white">
+                    <CardTitle className="text-lg lg:text-xl text-white">
                       Estimated Fuel Cost{" "}
                       <strong className="capitalize text-[#E9D8A6]">
                         Calculator{" "}
                       </strong>{" "}
                     </CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
+                    <CardDescription className="text-xs lg:text-sm text-muted-foreground">
                       Plan your ride smarter. Calculate how much fuel your trip
                       will cost based on city, fuel type, car category &
                       distance.
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="px-6 pb-6">
+                  <CardContent className="px-4 lg:px-6 pb-6">
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -630,7 +630,7 @@ const App = () => {
                             onChange={(e) =>
                               setFuelType(e.target.value as "petrol" | "diesel")
                             }
-                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white"
+                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white text-xs lg:text-base"
                           >
                             <option value="petrol">Petrol</option>
                             <option value="diesel">Diesel</option>
@@ -652,7 +652,7 @@ const App = () => {
                                 e.target.value as "compact" | "sedan" | "suv"
                               )
                             }
-                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white"
+                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white text-xs lg:text-base"
                           >
                             <option value="compact">Compact</option>
                             <option value="sedan">Sedan</option>
@@ -675,7 +675,7 @@ const App = () => {
                                 e.target.value as "city" | "highway" | "mixed"
                               )
                             }
-                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white"
+                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white text-xs lg:text-base"
                           >
                             <option value="city">City</option>
                             <option value="highway">Highway</option>
@@ -698,7 +698,7 @@ const App = () => {
                               setDistance(parseFloat(e.target.value))
                             }
                             placeholder="e.g. 50"
-                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white"
+                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white text-xs lg:text-base"
                           />
                         </div>
                         {/* Optional Custom Mileage */}
@@ -722,7 +722,7 @@ const App = () => {
                               )
                             }
                             placeholder="e.g. 18"
-                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white"
+                            className="w-full p-2 rounded-md bg-zinc-800 border border-zinc-600 text-white text-xs lg:text-base"
                           />
                         </div>
                       </div>
@@ -730,7 +730,7 @@ const App = () => {
                       {/* Submit Button */}
                       <button
                         type="submit"
-                        className="w-full md:w-fit bg-[#0A9396] hover:bg-[#005F73] text-white text-sm px-5 py-2 rounded-md transition-all duration-200"
+                        className="w-full md:w-fit bg-[#0A9396] hover:bg-[#005F73] text-white text-sm px-5 py-2 rounded-md transition-all duration-200 text-xs lg:text-sm"
                       >
                         Calculate Fuel Cost
                       </button>
@@ -758,7 +758,7 @@ const App = () => {
                                   Estimated Fuel Cost
                                 </p>
 
-                                <p className="text-3xl font-semibold text-green-400 mt-1">
+                                <p className="text-2xl lg:text-3xl font-semibold text-green-400 mt-1">
                                   ₹{(animatedCost ?? 0).toFixed(2)}
                                 </p>
 
