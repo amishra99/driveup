@@ -808,7 +808,7 @@ const App = () => {
               </p>
             </div>
             <div className="h-auto flex items-center justify-center p-4">
-              <Card className="w-full max-w-3xl p-6 flex flex-col gap-6 relative rounded-2xl bg-[#1a1a1a] shadow-none border-none mt-10 mb-10">
+              <Card className="w-full max-w-3xl p-0 lg:p-6 flex flex-col gap-6 relative rounded-2xl bg-[#1a1a1a] shadow-none border-none mt-10 mb-10">
                 {/* Question Counter */}
                 <div className="text-center text-sm text-gray-400">
                   Question {currentQuestionIndex} of {totalQuestions}
@@ -816,7 +816,7 @@ const App = () => {
 
                 {/* Question Section */}
                 <div className="flex flex-col text-center">
-                  <h1 className="text-2xl font-bold text-[#E9D8A6] mb-10">
+                  <h1 className="text-lg lg:text-2xl font-bold text-[#E9D8A6] mb-10">
                     {currentQuestion.question}
                   </h1>
                   {/* Render Single-Select as Buttons */}
@@ -827,7 +827,7 @@ const App = () => {
                           key={option.id}
                           variant="outline"
                           className={`p-3 h-auto text-white border border-white rounded-lg transition-all duration-300 
-          w-full text-center text-sm px-4 py-3 leading-tight
+          w-full text-center text-xs lg:text-sm px-4 py-3 leading-tight
           ${
             answers[currentQuestion.id] === option.id
               ? "border-[#EE9B00] text-[#EE9B00]"
@@ -867,7 +867,7 @@ const App = () => {
                         )
                       }
                       placeholder="Select preferred brands"
-                      className="text-black z-50"
+                      className="text-black z-50 text-xs lg:text-sm"
                       styles={{
                         control: (base) => ({
                           ...base,
@@ -884,7 +884,7 @@ const App = () => {
                       {currentQuestion.options?.map((option) => (
                         <label
                           key={option.id}
-                          className="flex items-center gap-2 cursor-pointer bg-[#1a1a1a] border border-white rounded-lg px-4 py-3 transition-all duration-300 hover:border-[#EE9B00]"
+                          className="flex items-center gap-2 cursor-pointer bg-[#1a1a1a] border border-white rounded-lg px-3 lg:px-4 py-3 transition-all duration-300 hover:border-[#EE9B00] text-xs lg:text-sm"
                         >
                           <input
                             type="checkbox"
@@ -902,7 +902,7 @@ const App = () => {
                             className="hidden"
                           />
                           <div
-                            className={`w-5 h-5 flex items-center justify-center border border-white rounded-md ${
+                            className={`w-3 h-3 lg:w-5 lg:h-5 flex items-center justify-center border border-white rounded-md  ${
                               answers[currentQuestion.id]?.includes(option.id)
                                 ? "bg-[#EE9B00] border-[#EE9B00]"
                                 : "bg-transparent"
@@ -914,7 +914,7 @@ const App = () => {
                               <span className="text-black font-bold">✔</span>
                             )}
                           </div>
-                          <span className="text-white text-sm">
+                          <span className="text-white text-xs lg:text-sm">
                             {option.label}
                           </span>
                         </label>
