@@ -327,31 +327,31 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   );
 };
 
-
-
 const bulletItems = [
   {
-    icon: <MailCheck className="text-blue-400 mt-1" size={18} />,
+    icon: <MailCheck className="text-blue-400 mt-1 w-6 h-6 lg:w-5 lg:h-5" />,
     pill: "Email Support",
     desc: "Fast replies for straightforward questions — no wait, no fluff.",
   },
   {
-    icon: <PhoneCall className="text-green-400 mt-1" size={18} />,
+    icon: <PhoneCall className="text-green-400 mt-1 w-6 h-6 lg:w-5 lg:h-5" />,
     pill: "Live 1:1 Call",
     desc: "Book a personal session for in-depth advice or comparisons.",
   },
   {
-    icon: <Lightbulb className="text-yellow-400 mt-1" size={18} />,
+    icon: <Lightbulb className="text-yellow-400 mt-1 w-6 h-6 lg:w-5 lg:h-5" />,
     pill: "Smart Suggestions",
     desc: "We match cars to your lifestyle — not just trending models.",
   },
   {
-    icon: <Sparkles className="text-purple-400 mt-1" size={18} />,
+    icon: <Sparkles className="text-purple-400 mt-1 w-6 h-6 lg:w-5 lg:h-5" />,
     pill: "Clarity on Features",
     desc: "We simplify jargon so you focus on what truly matters.",
   },
   {
-    icon: <BadgeCheck className="text-emerald-400 mt-1" size={18} />,
+    icon: (
+      <BadgeCheck className="text-emerald-400 mt-1 w-6 h-6 lg:w-5 lg:h-5" />
+    ),
     pill: "No Ads. No Bias.",
     desc: "Advice you can trust — brand-neutral and focused on you.",
   },
@@ -725,16 +725,16 @@ const App = () => {
                 you figure it out — via email or a quick expert call.
               </p>
             </div>
-            <div className=" px-6 py-12 max-w-6xl mx-auto text-white">
+            <div className="px-2 lg:px-6 py-12 max-w-6xl mx-auto text-white">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 {/* Left Side – Benefits */}
                 <div className="space-y-10">
                   <div className="space-y-6 pr-4">
-                    <h2 className="text-xl font-semibold text-white tracking-wide">
+                    <h2 className="text-lg lg:text-xl font-semibold text-white tracking-wide">
                       DriveUp - Your co-driver for car decisions
                     </h2>
 
-                    <div className="space-y-6 text-sm text-gray-300 md:pr-6 md:border-r md:border-white/10">
+                    <div className="space-y-6 text-xs lg:text-sm text-gray-300 md:pr-6 md:border-r md:border-white/10">
                       {bulletItems.map((item, index) => (
                         <motion.div
                           key={index}
@@ -769,10 +769,10 @@ const App = () => {
                 <div>
                   {step === "form" && (
                     <form onSubmit={handleFormSubmit} className="space-y-5">
-                      <h3 className="text-xl font-semibold text-white">
+                      <h3 className="text-lg lg:text-xl font-semibold text-white">
                         Let’s start with the basics
                       </h3>
-                      <p className="text-gray-400 text-sm mb-2">
+                      <p className="text-gray-400 text-xs lg:text-sm mb-2">
                         Tell us your concern — we’ll help you through email or a
                         quick call.
                       </p>
@@ -783,7 +783,7 @@ const App = () => {
                         required
                         onChange={handleChange}
                         placeholder="Full Name *"
-                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg"
+                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg text-xs lg:text-base"
                       />
                       <input
                         name="email"
@@ -791,14 +791,14 @@ const App = () => {
                         required
                         onChange={handleChange}
                         placeholder="Email *"
-                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg"
+                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg text-xs lg:text-base"
                       />
                       <input
                         name="phone"
                         type="text"
                         onChange={handleChange}
                         placeholder="Phone (optional)"
-                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg"
+                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg text-xs lg:text-base"
                       />
                       <textarea
                         name="concern"
@@ -806,12 +806,12 @@ const App = () => {
                         required
                         onChange={handleChange}
                         placeholder="Describe your concern *"
-                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg"
+                        className="w-full bg-zinc-800 text-white placeholder:text-gray-400 border border-zinc-700 px-4 py-3 rounded-lg text-xs lg:text-base"
                       />
 
                       <button
                         type="submit"
-                        className="bg-[#0A9396] text-white px-6 py-3 rounded-lg hover:opacity-70 transition "
+                        className="bg-[#0A9396] text-white px-6 py-3 rounded-lg hover:opacity-70 transition text-sm lg:text-base"
                       >
                         Continue
                       </button>
