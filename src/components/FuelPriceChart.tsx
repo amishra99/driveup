@@ -76,6 +76,21 @@ export default function FuelPriceChart({
     fetchData();
   }, [city, fuelType]);
 
+  const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth < 640); // Tailwind 'sm'
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    return isMobile;
+  };
+
+  const isMobile = useIsMobile();
+
   const latestPrice =
     chartData.length > 0
       ? [...chartData]
@@ -91,9 +106,9 @@ export default function FuelPriceChart({
 
   return (
     <Card className="bg-[#1f1f1f] shadow-sm border border-zinc-700 rounded-lg">
-      <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-700 px-6 py-4">
-        <div>
-          <CardTitle className="text-xl text-white">
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-700 px-4 lg:px-6 py-4">
+        <div className="mb-4 lg:mb-0">
+          <CardTitle className="text-base lg:text-xl text-white">
             Fuel Prices Trend in{" "}
             <strong className="capitalize text-[#E9D8A6]">
               {city.replace("-", " ")}
@@ -165,23 +180,24 @@ export default function FuelPriceChart({
             </p>
           </div>
         </div>
-        <div className="mt-4 sm:mt-0 flex gap-4 items-center">
+        <div className="flex flex-wrap gap-4 items-start sm:items-center">
           {["petrol", "diesel"].map((type) => (
             <button
               key={type}
               onClick={() => setFuelType(type as "petrol" | "diesel")}
-              className={`rounded-lg px-6 py-2 text-sm font-medium border transition ${
+              className={`rounded-3xl px-6 py-2 text-xs lg:text-sm font-medium border transition ${
                 fuelType === type
-                  ? "bg-none text-white border-none"
+                  ? "bg-none text-white border-white lg:border-none"
                   : "text-muted-foreground border-zinc-600 hover:border-zinc-400 rounded-3xl"
               }`}
             >
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </button>
           ))}
-          <div className="ml-4 text-sm sm:text-base flex flex-col sm:flex-row sm:items-center text-muted-foreground">
+
+          <div className="ml-0 sm:ml-4 w-full sm:w-auto text-sm sm:text-base flex flex-col sm:flex-row sm:items-center text-muted-foreground">
             <span className="mr-1 text-xs sm:text-sm font-normal text-muted-foreground">
-              Latest Price:{""}
+              Latest Price:
             </span>
             <span className="text-base sm:text-base text-white">
               ₹{latestPrice.toFixed(2)}
@@ -190,9 +206,9 @@ export default function FuelPriceChart({
         </div>
       </CardHeader>
 
-      <CardContent className="px-4 py-6">
+      <CardContent className="px-2 lg:px-4 py-6">
         {chartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={isMobile ? 150 : 300}>
             <LineChart
               data={sortedData}
               margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
