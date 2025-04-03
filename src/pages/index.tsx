@@ -1,390 +1,183 @@
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import Image from "next/image";
+import Hyperspeed from "@/components/Hyperspeed/Hyperspeed";
+import BlurText from "@/components/BlurText/BlurText";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import ShinyText from "@/components/ShinyText/ShinyText";
+import { LoginForm } from "@/components/login-form";
+import { motion } from "framer-motion";
 import { useModal } from "@/components/ui/animated-modal";
-import { useRouter } from "next/router";
-import {
-  auth,
-  setupRecaptchaVerifier,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  PhoneAuthProvider,
-  signInWithCredential,
-  db,
-  doc,
-  getDoc,
-  setDoc,
-} from "@/utils/firebaseConfig";
 
-declare global {
-  interface Window {
-    recaptchaVerifier: RecaptchaVerifier | null;
-  }
-}
+export default function Home() {
+  const { setOpen } = useModal(); // ✅ Access modal state
+  const currentYear = new Date().getFullYear(); // ✅ Dynamic Year
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
-  const { setOpen } = useModal();
-  const router = useRouter();
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [showUserInfoModal, setShowUserInfoModal] = useState(false);
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [countdown, setCountdown] = useState<number | null>(null);
-  const [verificationId, setVerificationId] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  // Reset OTP state on page refresh
-  useEffect(() => {
-    setOtpSent(false);
-    setCountdown(null);
-  }, []);
-
-  useEffect(() => {
-    if (!(window as any).recaptchaVerifier) {
-      (window as any).recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-        }
-      );
-    }
-  }, []);
-
-  // Start countdown when OTP is sent
-  useEffect(() => {
-    if (otpSent && countdown !== null && countdown > 0) {
-      const timer = setInterval(() => {
-        setCountdown((prev) => (prev !== null ? prev - 1 : 0));
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [otpSent, countdown]);
-
-  // Reset `otpSent` when countdown reaches 0
-  useEffect(() => {
-    if (countdown === 0) {
-      setOtpSent(false);
-      setCountdown(null);
-    }
-  }, [countdown]);
-
-  // ✅ Send OTP
-  const handleSendOtp = async () => {
-    if (phone.length < 10) return alert("Enter a valid phone number");
-
-    setLoading(true);
-    setMessage("Initializing reCAPTCHA...");
-
-    try {
-      // ✅ Always reset and initialize reCAPTCHA before sending OTP
-      setupRecaptchaVerifier();
-
-      setMessage("Sending OTP...");
-
-      if (!window.recaptchaVerifier) {
-        console.error("❌ reCAPTCHA verifier not initialized.");
-        setMessage("reCAPTCHA not ready. Please try again.");
-        return;
-      }
-
-      const appVerifier = window.recaptchaVerifier;
-
-      const confirmation = await signInWithPhoneNumber(
-        auth,
-        `+91${phone}`,
-        appVerifier
-      );
-
-      setVerificationId(confirmation.verificationId);
-      setOtpSent(true);
-      setCountdown(30);
-      setMessage("✅ OTP Sent! Please enter the OTP.");
-    } catch (error) {
-      console.error("❌ Error sending OTP:", error);
-      if (error instanceof Error) {
-        setMessage(`Error: ${error.message}`);
-      } else {
-        setMessage("An unknown error occurred.");
-      }
-    }
-
-    setLoading(false);
+  const handleAnimationComplete = () => {
+    console.log("Animation completed!");
   };
-
-  // ✅ Verify OTP & Check for First-Time User
-  const [debugMessage, setDebugMessage] = useState("");
-
-  const [userStatus, setUserStatus] = useState("checking"); // ✅ Controls what happens after login
-
-  const handleVerifyOtp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!otp || !verificationId) {
-      setDebugMessage("⚠ Enter OTP before verifying.");
-      return;
-    }
-
-    setLoading(true);
-    setMessage("Verifying OTP...");
-    setDebugMessage("⏳ Verifying OTP...");
-
-    try {
-      const credential = PhoneAuthProvider.credential(verificationId, otp);
-      const userCredential = await signInWithCredential(auth, credential);
-      const user = userCredential.user;
-
-      await auth.updateCurrentUser(user);
-      console.log("✅ User authenticated:", user.uid);
-      setDebugMessage(`✅ OTP Verified! User UID: ${user.uid}`);
-
-      localStorage.removeItem("user");
-
-      // ✅ Firestore User Check
-      setDebugMessage("⏳ Checking if user exists in Firestore...");
-      console.log("⏳ Checking Firestore...");
-
-      const userDocRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userDocRef);
-
-      if (!userDoc.exists()) {
-        setDebugMessage(
-          "🚀 First-time user detected! Opening user info form..."
-        );
-        console.log("🚀 First-time user detected! Opening user info form...");
-        setShowUserInfoModal(true);
-        setUserStatus("new"); // ✅ Set state to stop redirecting
-      } else {
-        console.log("✅ User exists in Firestore:", userDoc.data());
-        setDebugMessage("✅ Existing user found in Firestore!");
-        localStorage.setItem("user", JSON.stringify(userDoc.data()));
-        setUserStatus("existing"); // ✅ Set state to redirect
-      }
-    } catch (error) {
-      console.error("❌ OTP Verification Error:", error);
-      setDebugMessage("❌ Invalid OTP. Try again.");
-      setMessage("Invalid OTP. Try again.");
-
-      await auth.signOut();
-      localStorage.removeItem("user");
-      setUserStatus("checking"); // Reset state to allow retry
-    }
-
-    setLoading(false);
-  };
-
-  const handleSaveUserInfo = async () => {
-    if (!name || !city) {
-      console.log("⚠ Please enter name and city.");
-      return;
-    }
-
-    const user = auth.currentUser;
-    if (!user) {
-      console.log("❌ Error: No authenticated user found.");
-      return;
-    }
-
-    try {
-      console.log("⏳ Saving user info to Firestore...");
-
-      await setDoc(doc(db, "users", user.uid), {
-        name,
-        city,
-        phone: user.phoneNumber || "N/A",
-      });
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ name, city, phone: user.phoneNumber || "N/A" })
-      );
-
-      console.log("✅ User info saved successfully!");
-      setShowUserInfoModal(false);
-      router.push("/loading");
-    } catch (error) {
-      console.error("❌ Firestore error:", error);
-      alert("Failed to save user info. Please try again.");
-    }
-  };
-
-  useEffect(() => {
-    if (userStatus === "existing" && !showUserInfoModal) {
-      console.log("🔥 Redirecting after profile save...");
-      router.push("/loading");
-    }
-  }, [userStatus, showUserInfoModal]); // ✅ Redirects only when user is confirmed
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleVerifyOtp}>
-        <div className="flex flex-col gap-6">
-          {/* Logo & Heading */}
-          <div className="flex flex-col items-center gap-3">
-            <h1 className="text-xl lg:text-2xl font-bold text-[#E9D8A6]">
-              Let's Get You Logged In!
+    <>
+      {/* 🚀 Hyperspeed Background (Covers Text + Button on Mobile, Full on Desktop) */}
+      <div className="absolute inset-0 w-full h-full -z-10">
+        <Hyperspeed
+          effectOptions={{
+            onSpeedUp: () => {},
+            onSlowDown: () => {},
+            distortion: "LongRaceDistortion",
+            length: 400,
+            roadWidth: 10,
+            islandWidth: 5,
+            lanesPerRoad: 2,
+            fov: 70,
+            fovSpeedUp: 120,
+            speedUp: 2,
+            carLightsFade: 0.4,
+            totalSideLightSticks: 50,
+            lightPairsPerRoadWay: 70,
+            shoulderLinesWidthPercentage: 0.05,
+            brokenLinesWidthPercentage: 0.1,
+            brokenLinesLengthPercentage: 0.5,
+            lightStickWidth: [0.12, 0.5],
+            lightStickHeight: [1.3, 1.7],
+            movingAwaySpeed: [60, 80],
+            movingCloserSpeed: [-120, -160],
+            carLightsLength: [400 * 0.05, 400 * 0.15],
+            carLightsRadius: [0.05, 0.14],
+            carWidthPercentage: [0.3, 0.5],
+            carShiftX: [-0.2, 0.2],
+            carFloorSeparation: [0.05, 1],
+            colors: {
+              roadColor: 0x080808,
+              islandColor: 0x0a0a0a,
+              background: 0x000000,
+              shoulderLines: 0x131318,
+              brokenLines: 0x131318,
+              leftCars: [0xee9b00, 0xca6702, 0xbb3e03],
+              rightCars: [0xa4e3e6, 0x80d1d4, 0x53c2c6],
+              sticks: 0xa4e3e6,
+            },
+          }}
+        />
+      </div>
+
+      {/* 🚀 DriveUp Logo (Properly Positioned for Mobile & Desktop) */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+      >
+        <div className="fixed w-screen top-2 left-1/2 -translate-x-1/2 flex justify-center z-50">
+          <Image
+            src="/driveup_logo_white.png"
+            alt="DriveUp logo"
+            width={150}
+            height={50}
+            priority
+          />
+        </div>
+      </motion.div>
+
+      {/* 🚀 Layout: Desktop (50/50), Mobile (Stacked with Login Below) */}
+
+      <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center h-auto lg:h-screen p-8 sm:p-6 gap-10 lg:gap-0">
+        {/* ✅ Left Section (DriveUp Header, Subheader, Button, Infinite Scroll) */}
+        <main className="w-full lg:w-1/2 max-w-4xl text-center lg:text-left">
+          <div className="w-full flex justify-center lg:justify-start lg:pl-12 mt-36 sm:mt-16">
+            <h1 className="font-lufga text-5xl sm:text-6xl lg:text-7xl font-bold text-white">
+              <BlurText
+                text="Drive Smarter. DriveUp!"
+                delay={100}
+                animateBy="words"
+                direction="top"
+                onAnimationComplete={handleAnimationComplete}
+                className="text-5xl sm:text-5xl mb-8 text-[#E9D8A6] tracking-wide"
+              />
             </h1>
-            <p className="text-center text-xs lg:text-sm text-white/80">
-              Unlock the full experience and explore cars tailored just for you!{" "}
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="underline underline-offset-4 text-white/90 hover:text-white transition-all"
-              >
-                Discover why it’s worth it!
-              </button>
-            </p>
           </div>
 
-          {/* Login Form Fields */}
-          <div className="flex flex-col gap-6">
-            {/* Phone Number Input with OTP Button */}
-            <div className="grid gap-2">
-              <Label htmlFor="phone" className="text-white/90">
-                Phone Number
-              </Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your number"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="text-xs lg:text-base bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white flex-1"
-                />
-                <Button
-                  type="button"
-                  onClick={handleSendOtp}
-                  disabled={otpSent || phone.length < 10}
-                  className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                    otpSent
-                      ? "bg-gray-500 text-white cursor-not-allowed"
-                      : "bg-primary hover:bg-primary/80"
-                  }`}
-                >
-                  {otpSent ? `Resend in ${countdown}s` : "Send OTP"}
-                </Button>
-              </div>
-            </div>
-
-            {/* OTP Input */}
-            {otpSent && (
-              <div className="grid gap-2">
-                <Label htmlFor="otp" className="text-white/90">
-                  OTP
-                </Label>
-                <Input
-                  id="otp"
-                  type="text"
-                  maxLength={6}
-                  placeholder="Enter 6-digit OTP"
-                  required
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  className="bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white text-center tracking-widest"
-                />
-              </div>
-            )}
-
-            {/* Login Button */}
-            <Button
-              type="submit"
-              className="w-full bg-[#0A9396] text-white hover:bg-[#94D2BD] text-black transition-all duration-300"
-              disabled={loading}
-            >
-              {loading ? "Verifying..." : "Let's Go"}
-            </Button>
-          </div>
-
-          {/* Terms and Conditions */}
-          <div className="text-center text-xs text-white/70">
-            By clicking Let's Go, you agree to our{" "}
-            <a
-              href="https://www.driveup.in/terms-and-conditions"
-              className="underline underline-offset-4 text-white/90 hover:text-white transition-all"
-            >
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://www.driveup.in/privacy-policy"
-              className="underline underline-offset-4 text-white/90 hover:text-white transition-all"
-            >
-              Privacy Policy
-            </a>
-            .
-          </div>
-        </div>
-      </form>
-      {/* ✅ Ensure the modal is displayed properly */}
-      {userStatus === "new" && showUserInfoModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-          <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg text-white w-96">
-            <h2 className="text-base mb-4 text-center">
-              <strong>Let's Make This Official! </strong>Just a Few More Details
-              & You're All Set!
+          <div className="w-full flex justify-center lg:justify-start lg:pl-12">
+            <h2 className="font-lufga text-lg sm:text-2xl text-gray-300 max-w-2xl leading-relaxed">
+              <BlurText
+                text="Find, and explore cars like never before – your ultimate one-stop destination for all things automotive with DriveUp!"
+                delay={60}
+                animateBy="words"
+                direction="top"
+                onAnimationComplete={handleAnimationComplete}
+                className="text-lg sm:text-xl mb-8"
+              />
             </h2>
-
-            <div className="grid gap-4">
-              {/* Name */}
-              <div className="grid gap-2">
-                <label className="text-sm text-white/80">Full Name</label>
-                <Input
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-[#232323] border border-white/20 placeholder-gray-400 text-gray-400 focus:ring-white focus:border-white px-4 py-3 rounded-lg"
-                />
-              </div>
-
-              {/* City Dropdown */}
-              <div className="grid gap-2">
-                <label className="text-sm text-white/80">City</label>
-                <select
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="w-full bg-[#232323] border border-white/20 placeholder-white/50 text-gray-400 focus:ring-white focus:border-white px-4 py-3 rounded-lg"
-                >
-                  <option value="" disabled>
-                    Select your city
-                  </option>
-                  <option value="Ahmedabad">Ahmedabad</option>
-                  <option value="Bengaluru">Bengaluru</option>
-                  <option value="Chennai">Chennai</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Kolkata">Kolkata</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="New-Delhi">New Delhi</option>
-                  <option value="Patna">Patna</option>
-                  <option value="Pune">Pune</option>
-                </select>
-              </div>
-
-              {/* Save Button */}
-              <Button
-                onClick={handleSaveUserInfo}
-                className="w-full bg-[#0A9396] text-white hover:bg-[#94D2BD] text-black transition-all duration-300 py-3 rounded-lg"
-              >
-                Save & Continue
-              </Button>
-            </div>
           </div>
+
+          {/* ✅ Call to Action Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          >
+            <button
+              onClick={() => setOpen(true)}
+              className="shiny-button max-w-full inline-flex flex-nowrap mt-2 lg:ml-12"
+            >
+              <ShinyText
+                text="Know more"
+                disabled={false}
+                speed={3}
+                className=" animate-shine"
+              />
+            </button>
+          </motion.div>
+
+          {/* ✅ Infinite Scroll (Exactly as Before) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            whileHover={{
+              scale: 1.02,
+              boxShadow: "0px 4px 20px rgba(255, 255, 255, 0.2)",
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full sm:w-3/4 inline-flex flex-nowrap mt-10 mx-auto lg:ml-12 lg:mr-20 [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]"
+          >
+            <InfiniteScroll />
+          </motion.div>
+        </main>
+
+        {/* ✅ Right Section: Desktop Stays the Same, Mobile Moves Below */}
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+            whileHover={{
+              scale: 1.02,
+              boxShadow: "0px 4px 20px rgba(255, 255, 255, 0.2)",
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="flex flex-col items-center justify-center bg-white/2 p-8 md:p-12 rounded-lg backdrop-blur-lg w-full max-w-sm sm:max-w-md mt-12 lg:mt-0"
+          >
+            <div className="w-full">
+              <LoginForm />
+            </div>
+          </motion.div>
         </div>
-      )}
-      {/* ✅ TEMPORARY DEBUG BUTTON TO OPEN MODAL */}
-      <div id="recaptcha-container"></div> {/* Required for Firebase OTP */}
-      <p className="text-center text-white/80 text-sm">{message}</p>
-    </div>
+      </div>
+      {/* ✅ Footer (Blends into Hyperspeed) */}
+      <footer className="text-center text-white z-20 bg-[#0a0a0a]">
+        {/* ✅ Desktop: Footer on top of Hyperspeed */}
+        <p className="text-sm hidden lg:block absolute bottom-2 w-full">
+          &copy; {currentYear} DriveUp. All rights reserved.
+        </p>
+
+        {/* ✅ Mobile: Footer below login page */}
+        <p className="text-sm lg:hidden mt-8 pb-4">
+          &copy; {currentYear} DriveUp. All rights reserved.
+        </p>
+      </footer>
+    </>
   );
 }
