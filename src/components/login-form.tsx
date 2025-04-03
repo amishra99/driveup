@@ -229,10 +229,10 @@ export function LoginForm({
         <div className="flex flex-col gap-6">
           {/* Logo & Heading */}
           <div className="flex flex-col items-center gap-3">
-            <h1 className="text-2xl font-bold text-[#E9D8A6]">
+            <h1 className="text-xl lg:text-2xl font-bold text-[#E9D8A6]">
               Let's Get You Logged In!
             </h1>
-            <p className="text-center text-sm text-white/80">
+            <p className="text-center text-xs lg:text-sm text-white/80">
               Unlock the full experience and explore cars tailored just for you!{" "}
               <button
                 type="button"
@@ -259,7 +259,7 @@ export function LoginForm({
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white flex-1"
+                  className="text-xs lg:text-base bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white flex-1"
                 />
                 <Button
                   type="button"
