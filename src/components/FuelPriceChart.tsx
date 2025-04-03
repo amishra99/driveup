@@ -138,19 +138,24 @@ export default function FuelPriceChart({
                     {city.charAt(0).toUpperCase() + city.slice(1)}
                   </button>
                 </DialogTrigger>
-                <DialogContent className="max-w-sm">
-                  <div className="flex flex-col gap-3">
-                    <h3 className="text-lg font-semibold text-[#E9D8A6]">
-                      Select your city
+                <DialogContent className="max-w-sm p-6 rounded-xl bg-[#1c1c1c] text-white shadow-xl border border-zinc-700">
+                  <div className="flex flex-col gap-4">
+                    {/* Header */}
+                    <h3 className="text-xl font-bold text-[#E9D8A6] tracking-wide">
+                      Select Your City
                     </h3>
+
+                    {/* Search Input */}
                     <Input
                       type="text"
                       placeholder="Search city..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="rounded-md"
+                      className="rounded-md px-4 py-2 text-sm bg-zinc-900 border-zinc-700 placeholder:text-zinc-400"
                     />
-                    <div className="grid grid-cols-2 gap-2 max-h-[250px] overflow-y-auto">
+
+                    {/* Cities Grid */}
+                    <div className="grid grid-cols-2 gap-2 max-h-[250px] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-transparent pr-1">
                       {filteredCities.length > 0 ? (
                         filteredCities.map((c) => (
                           <Button
@@ -163,14 +168,18 @@ export default function FuelPriceChart({
                               setOpen(false);
                               setSearch("");
                             }}
-                            className="w-full text-sm"
+                            className={`w-full text-sm ${
+                              city === c.toLowerCase()
+                                ? "bg-[#0A9396] text-white"
+                                : "text-zinc-300 border-zinc-700 hover:bg-zinc-800"
+                            }`}
                           >
                             {c}
                           </Button>
                         ))
                       ) : (
-                        <p className="col-span-2 text-muted-foreground text-sm text-center">
-                          No cities found
+                        <p className="col-span-2 text-sm text-center text-zinc-400 italic">
+                          No cities found.
                         </p>
                       )}
                     </div>
