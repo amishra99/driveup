@@ -28,58 +28,38 @@ const LoadingPage = () => {
   const [showSkipButton, setShowSkipButton] = useState(false);
   const [user, setUser] = useState<any>(null);
 
+  // ✅ Auth + Firestore guard
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
-      if (!user) return;
+      if (!user) {
+        console.log("❌ Unauthenticated user on /loading. Redirecting to /...");
+        sessionStorage.removeItem("alreadyRedirected"); // Optional reset
+        router.replace("/");
+        return;
+      }
+
+      setUser(user);
 
       const userRef = doc(db, "users", user.uid);
-      const unsubscribeFirestore = onSnapshot(userRef, (userSnap) => {
-        if (userSnap.exists()) {
-          const userData = userSnap.data();
-          setUser(userData);
+      const unsubscribeFirestore = onSnapshot(userRef, (snap) => {
+        if (snap.exists()) {
+          console.log("👤 Fetched user profile:", snap.data());
+          // Optional: setUser(snap.data()); if needed
         }
       });
 
-      // Clean up both listeners
-      return () => {
-        unsubscribeFirestore();
-      };
+      return () => unsubscribeFirestore();
     });
 
     return () => unsubscribeAuth();
-  }, []);
+  }, [router]);
 
+  // ✅ Timed animation + redirect
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        console.log("❌ Unauthenticated user on /loading. Redirecting to /...");
-        router.replace("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    // Show "Welcome to DriveUp" after 3 seconds
-    const headerTimeout = setTimeout(() => {
-      setShowSecondHeader(true);
-    }, 3000);
-
-    // Show "Almost there!" after 7 seconds
-    const textTimeout = setTimeout(() => {
-      setShowSecondText(true);
-    }, 6000);
-
-    // Show "Skip" button after 3 seconds (prevents instant skipping)
-    const skipTimeout = setTimeout(() => {
-      setShowSkipButton(true);
-    }, 3000);
-
-    // Redirect to /explore after 10 seconds
-    const redirectTimeout = setTimeout(() => {
-      router.push("/explore");
-    }, 9500);
+    const headerTimeout = setTimeout(() => setShowSecondHeader(true), 3000);
+    const textTimeout = setTimeout(() => setShowSecondText(true), 6000);
+    const skipTimeout = setTimeout(() => setShowSkipButton(true), 3000);
+    const redirectTimeout = setTimeout(() => router.push("/explore"), 9500);
 
     return () => {
       clearTimeout(headerTimeout);
@@ -89,7 +69,6 @@ const LoadingPage = () => {
     };
   }, [router]);
 
-  // 🔹 Skip button handler
   const handleSkip = () => {
     console.log("🚀 User skipped loading screen!");
     router.push("/explore");
