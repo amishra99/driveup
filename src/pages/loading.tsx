@@ -54,7 +54,7 @@ const LoadingPage = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-black text-white text-center relative">
+    <div className="h-screen mb-6 flex flex-col justify-center items-center bg-black text-white text-center relative">
       {/* 🔹 DriveUp Logo */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -70,11 +70,11 @@ const LoadingPage = () => {
       </motion.div>
 
       {/* 🔹 Animated Header Text Change (Appears Early at 3s) */}
-      <div className="mt-2 h-[60px] ml-4 mr-4 mb-4 flex items-center justify-center">
+      <div className="mt-2 h-[60px] ml-4 mr-4 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.h1
             key={showSecondHeader ? "second-header" : "first-header"}
-            className="text-4xl tracking-wide ml-4 mr-4 mt-4 mb-4 sm:text-4xl font-bold text-[#E9D8A6]"
+            className="text-3xl lg:text-4xl tracking-wide ml-4 mr-4 mt-4 sm:text-4xl font-bold text-[#E9D8A6]"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
@@ -90,7 +90,7 @@ const LoadingPage = () => {
         <AnimatePresence mode="wait">
           <motion.p
             key={showSecondText ? "second-text" : "first-text"}
-            className="text-lg text-gray-400"
+            className="text-base lg:text-lg text-gray-400"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
