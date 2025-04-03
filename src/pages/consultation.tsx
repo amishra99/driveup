@@ -566,7 +566,10 @@ const App = () => {
                     type === "email" && formData.transmission
                       ? `
                     <p style="font-size:15px;color:#333;margin-bottom:8px;">
-                      <strong>Transmission Preference:</strong><br />${formData.transmission}
+                      <strong>Transmission Preference:</strong><br />  ${
+                        formData.transmission.charAt(0).toUpperCase() +
+                        formData.transmission.slice(1).toLowerCase()
+                      }
                     </p>`
                       : ""
                   }
@@ -574,7 +577,7 @@ const App = () => {
               </tr>
               <tr>
                 <td align="center" style="padding:30px 40px;">
-                  <a href="https://driveup.in" style="background-color:#bb3e03;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;">
+                  <a href="https://www.driveup.in" style="background-color:#bb3e03;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;">
                     Explore DriveUp
                   </a>
                 </td>
@@ -583,16 +586,16 @@ const App = () => {
                 <td align="center" style="padding:20px 30px">
                   <p style="font-size:13px;color:#888;margin-bottom:6px;">Browse our flagship AI features:</p>
                   <p style="font-size:14px;margin:0;">
-                    <a href="https://driveup.in/findyourcar" style="color:#bb3e03;text-decoration:none;">Find Your Car</a> &nbsp;|&nbsp;
-                    <a href="https://driveup.in/drivebot" style="color:#bb3e03;text-decoration:none;">DriveBot</a>
+                    <a href="https://www.driveup.in/findyourcar" style="color:#bb3e03;text-decoration:none;">Find Your Car</a> &nbsp;|&nbsp;
+                    <a href="https://www.driveup.in/drivebot" style="color:#bb3e03;text-decoration:none;">DriveBot</a>
                   </p>
                 </td>
               </tr>
               <tr>
                 <td align="center" style="padding-bottom:20px;padding-top:10px; font-size:12px;color:#aaa;line-height:1.6; background-color:#fff1e6; ">
                   <div style="margin-bottom: 10px;">
-                    <a href="https://driveup.in/privacy-policy" style="color:#bb3e03;text-decoration:none;margin-right:12px;">Privacy Policy</a>
-                    <a href="https://driveup.in/terms-and-conditions" style="color:#bb3e03;text-decoration:none;">Terms & Conditions</a>
+                    <a href="https://www.driveup.in/privacy-policy" style="color:#bb3e03;text-decoration:none;margin-right:12px;">Privacy Policy</a>
+                    <a href="https://www.driveup.in/terms-and-conditions" style="color:#bb3e03;text-decoration:none;">Terms & Conditions</a>
                   </div>
                   © ${new Date().getFullYear()} DriveUp. All rights reserved. <br> Drive Smarter. DriveUp.
                 </td>
