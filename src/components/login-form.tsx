@@ -309,14 +309,14 @@ export function LoginForm({
           <div className="text-center text-xs text-white/70">
             By clicking Let's Go, you agree to our{" "}
             <a
-              href="https://driveup.in/terms-and-conditions"
+              href="https://www.driveup.in/terms-and-conditions"
               className="underline underline-offset-4 text-white/90 hover:text-white transition-all"
             >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
-              href="https://driveup.in/privacy-policy"
+              href="https://www.driveup.in/privacy-policy"
               className="underline underline-offset-4 text-white/90 hover:text-white transition-all"
             >
               Privacy Policy
