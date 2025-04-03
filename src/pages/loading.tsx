@@ -4,6 +4,15 @@ import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import carLoadingAnimation from "@/components/loadingCarAnimation.json";
+import { User } from "firebase/auth"; // Import User type
+import { auth } from "@/utils/firebaseConfig";
+import { db, doc, getDoc, setDoc } from "@/utils/firebaseConfig";
+import {
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+} from "firebase/firestore";
 
 // ✅ This ensures Lottie is only rendered on the client
 const Lottie = dynamic(() => import("react-lottie-player"), {
@@ -17,6 +26,39 @@ const LoadingPage = () => {
   const [showSecondHeader, setShowSecondHeader] = useState(false);
   const [showSecondText, setShowSecondText] = useState(false);
   const [showSkipButton, setShowSkipButton] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (!user) return;
+
+      const userRef = doc(db, "users", user.uid);
+      const unsubscribeFirestore = onSnapshot(userRef, (userSnap) => {
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setUser(userData);
+        }
+      });
+
+      // Clean up both listeners
+      return () => {
+        unsubscribeFirestore();
+      };
+    });
+
+    return () => unsubscribeAuth();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        console.log("❌ Unauthenticated user on /loading. Redirecting to /...");
+        router.replace("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     // Show "Welcome to DriveUp" after 3 seconds
