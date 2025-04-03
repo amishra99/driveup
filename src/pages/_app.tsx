@@ -59,11 +59,19 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   useEffect(() => {
-    if (userStatus === "existing" && router.pathname === "/") {
-      console.log("🔥 Redirecting existing user to /dashboard...");
+    const alreadyRedirected = sessionStorage.getItem("alreadyRedirected");
+
+    if (
+      user &&
+      userStatus === "existing" &&
+      router.pathname === "/" &&
+      !alreadyRedirected
+    ) {
+      sessionStorage.setItem("alreadyRedirected", "true");
+      console.log("🔥 Redirecting existing user to /loading...");
       router.push("/loading");
     }
-  }, [userStatus, router.pathname]);
+  }, [user, userStatus, router.pathname]);
 
   if (loading) return <p className="text-center text-white">Loading...</p>;
 
