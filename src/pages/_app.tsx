@@ -7,7 +7,12 @@ import { AnimatedModalDemo } from "@/components/DiscoverModal_Login";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth, db, doc, getDoc } from "@/utils/firebaseConfig";
-import { setPersistence, browserLocalPersistence } from "firebase/auth";
+import {
+  setPersistence,
+  browserLocalPersistence,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
 import Head from "next/head";
 import Script from "next/script";
 
@@ -17,47 +22,51 @@ export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState<string | null>("checking");
 
+  // Enable persistent login
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence)
       .then(() => console.log("✅ Firebase Auth Persistence Enabled!"))
       .catch((error) => console.error("❌ Error enabling persistence:", error));
   }, []);
 
+  // Listen to auth state and redirect as needed
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
         console.log("✅ User detected:", user.uid);
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         setUserStatus("checking");
 
-        console.log("⏳ Checking Firestore for user:", user.uid);
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
         if (!userDoc.exists()) {
-          console.log("🚀 New user detected! Showing profile form...");
+          console.log("🚀 New user detected!");
           setUserStatus("new");
         } else {
-          console.log("✅ Existing user found! Redirecting...");
+          console.log("✅ Existing user. Setting status...");
           setUserStatus("existing");
         }
       } else {
-        console.log("❌ No authenticated user found. Redirecting...");
+        console.log("❌ User signed out or unauthenticated.");
         localStorage.removeItem("user");
+        sessionStorage.removeItem("alreadyRedirected"); // ✅ Clear session redirect flag
         setUser(null);
         setUserStatus(null);
 
         if (router.pathname !== "/") {
-          router.replace("/");
+          router.replace("/"); // ✅ Send back to index on logout
         }
       }
+
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, [router]);
 
+  // Redirect existing users from `/` to `/loading` only once per session
   useEffect(() => {
     const alreadyRedirected = sessionStorage.getItem("alreadyRedirected");
 
@@ -68,7 +77,7 @@ export default function App({ Component, pageProps }: AppProps) {
       !alreadyRedirected
     ) {
       sessionStorage.setItem("alreadyRedirected", "true");
-      console.log("🔥 Redirecting existing user to /loading...");
+      console.log("🔥 Redirecting to /loading...");
       router.push("/loading");
     }
   }, [user, userStatus, router.pathname]);
