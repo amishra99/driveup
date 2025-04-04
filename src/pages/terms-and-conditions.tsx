@@ -93,7 +93,7 @@ const App = () => {
         />
         <meta
           property="og:url"
-          content="https://driveup.in/terms-and-conditions"
+          content="https://www.driveup.in/terms-and-conditions"
         />
         <meta property="og:image" content="/og-image.png" />
       </Head>
