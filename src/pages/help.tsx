@@ -622,7 +622,7 @@ const App = () => {
           property="og:description"
           content="Get answers to your questions and contact DriveUp support."
         />
-        <meta property="og:url" content="https://driveup.in/help" />
+        <meta property="og:url" content="https://www.driveup.in/help" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
