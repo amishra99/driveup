@@ -496,7 +496,7 @@ const App = () => {
           property="og:description"
           content="Live fuel prices from major cities across India."
         />
-        <meta property="og:url" content="https://driveup.in/fuelpricetracker" />
+        <meta property="og:url" content="https://www.driveup.in/fuelpricetracker" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
