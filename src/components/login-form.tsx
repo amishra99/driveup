@@ -290,7 +290,7 @@ export function LoginForm({
                   required
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  className="bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white text-center tracking-widest"
+                  className="text-xs lg:text-base bg-white/10 border border-white/20 placeholder-white/50 text-white focus:ring-white focus:border-white text-center tracking-widest"
                 />
               </div>
             )}
