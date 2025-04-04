@@ -323,7 +323,7 @@ const App = () => {
                     className="text-blue-600 underline"
                   >
                     https://driveup.in/help
-                  </a>a
+                  </a>
                 </li>
                 <li>
                   By email:{" "}
