@@ -91,7 +91,7 @@ const App = () => {
           property="og:description"
           content="Understand how we handle your data and privacy."
         />
-        <meta property="og:url" content="https://driveup.in/privacy-policy" />
+        <meta property="og:url" content="https://www.driveup.in/privacy-policy" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
