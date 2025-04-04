@@ -1146,7 +1146,7 @@ const App = () => {
           property="og:description"
           content="Search and filter cars by safety, fuel type, features and more."
         />
-        <meta property="og:url" content="https://driveup.in/explore" />
+        <meta property="og:url" content="https://www.driveup.in/explore" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
