@@ -29,58 +29,47 @@ export default function App({ Component, pageProps }: AppProps) {
       .catch((error) => console.error("❌ Error enabling persistence:", error));
   }, []);
 
-  // Listen to auth state and redirect as needed
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user: User | null) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         console.log("✅ User detected:", user.uid);
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         setUserStatus("checking");
 
+        console.log("⏳ Checking Firestore for user:", user.uid);
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
         if (!userDoc.exists()) {
-          console.log("🚀 New user detected!");
+          console.log("🚀 New user detected! Showing profile form...");
           setUserStatus("new");
         } else {
-          console.log("✅ Existing user. Setting status...");
+          console.log("✅ Existing user found! Redirecting...");
           setUserStatus("existing");
         }
       } else {
-        console.log("❌ User signed out or unauthenticated.");
+        console.log("❌ No authenticated user found. Redirecting...");
         localStorage.removeItem("user");
-        sessionStorage.removeItem("alreadyRedirected"); // ✅ Clear session redirect flag
         setUser(null);
         setUserStatus(null);
 
         if (router.pathname !== "/") {
-          router.replace("/"); // ✅ Send back to index on logout
+          router.replace("/");
         }
       }
-
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, [router]);
 
-  // Redirect existing users from `/` to `/loading` only once per session
   useEffect(() => {
-    const alreadyRedirected = sessionStorage.getItem("alreadyRedirected");
-
-    if (
-      user &&
-      userStatus === "existing" &&
-      router.pathname === "/" &&
-      !alreadyRedirected
-    ) {
-      sessionStorage.setItem("alreadyRedirected", "true");
-      console.log("🔥 Redirecting to /loading...");
+    if (userStatus === "existing" && router.pathname === "/") {
+      console.log("🔥 Redirecting existing user to /dashboard...");
       router.push("/loading");
     }
-  }, [user, userStatus, router.pathname]);
+  }, [userStatus, router.pathname]);
 
   if (loading) return <p className="text-center text-white">Loading...</p>;
 
