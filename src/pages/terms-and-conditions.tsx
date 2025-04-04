@@ -179,16 +179,17 @@ const App = () => {
                 reschedule within the applicable time window.
               </p>
               <p className="mb-4">
-                Refunds are only applicable to consultations that were not
-                delivered or had technical issues. Refund requests must be
-                submitted within <strong>48 hours</strong> of the session.
-                Refunds will be processed to the original payment method within{" "}
-                <strong>5–7 business days</strong>.
+                <strong>Refunds</strong> are applicable only for valid cases and
+                must be requested within <strong>48 hours</strong> of the
+                session. Approved refunds will be processed to the original
+                payment method within <strong>5–7 business days</strong>.
               </p>
               <p className="mb-4">
-                To cancel a session, please contact us at least{" "}
-                <strong>2 hours before</strong> the scheduled time. Late
-                cancellations may not be eligible for a full refund.
+                <strong>Cancellations</strong> are allowed up to{" "}
+                <strong>2 hours before</strong> the scheduled session. In such
+                cases, you can request a full refund or reschedule.
+                Cancellations made after this window may not be eligible for a
+                full refund.
               </p>
               <p className="mb-4">
                 For any refund or cancellation requests, you may contact us at:
