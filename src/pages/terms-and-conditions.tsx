@@ -93,7 +93,7 @@ const App = () => {
         />
         <meta
           property="og:url"
-          content="https://www.driveup.in/terms-and-conditions"
+          content="https://driveup.in/terms-and-conditions"
         />
         <meta property="og:image" content="/og-image.png" />
       </Head>
@@ -173,16 +173,37 @@ const App = () => {
                 3. Refunds and Cancellations
               </h2>
               <p className="mb-4">
-                If you are not satisfied with a paid consultation or need to
-                cancel your booking, you may request a refund or reschedule
-                prior to the scheduled time. Refunds will be processed in
-                accordance with our internal refund policy and may take up to 7
-                business days.
+                At DriveUp, we strive to deliver a high-quality consultation
+                experience. If you're not satisfied with a paid consultation or
+                need to cancel your booking, you may request a refund or
+                reschedule within the applicable time window.
               </p>
               <p className="mb-4">
-                To request a refund or cancel a session, please contact us
-                through the Help page or email us at support@driveup.in.
+                Refunds are only applicable to consultations that were not
+                delivered or had technical issues. Refund requests must be
+                submitted within <strong>48 hours</strong> of the session.
+                Refunds will be processed to the original payment method within{" "}
+                <strong>5–7 business days</strong>.
               </p>
+              <p className="mb-4">
+                To cancel a session, please contact us at least{" "}
+                <strong>2 hours before</strong> the scheduled time. Late
+                cancellations may not be eligible for a full refund.
+              </p>
+              <p className="mb-4">
+                For any refund or cancellation requests, you may contact us at:
+              </p>
+              <ul className="mb-4 list-disc list-inside text-white text-sm sm:text-base space-y-1">
+                <li>
+                  <strong>Email:</strong> hello@driveup.in
+                </li>
+                <li>
+                  <strong>Phone:</strong> +91-7548001045
+                </li>
+                <li>
+                  <strong>Support Hours:</strong> Mon–Sat, 10:00 AM to 6:00 PM
+                </li>
+              </ul>
 
               <h2 className="text-2xl font-semibold mt-10 mb-4 text-white">
                 4. User Responsibilities
@@ -289,12 +310,12 @@ const App = () => {
                 11. Contact Us
               </h2>
               <p className="mb-2">
-                If you have any questions about these Terms and Conditions, you
-                can contact us:
+                If you have any questions about these Terms and Conditions, or
+                need support, you can contact us:
               </p>
-              <ul className="list-disc list-inside space-y-2 mb-10">
+              <ul className="list-disc list-inside space-y-2 mb-10 text-white text-sm sm:text-base">
                 <li>
-                  By visiting:{" "}
+                  By visiting our Help page:{" "}
                   <a
                     href="https://driveup.in/help"
                     target="_blank"
@@ -302,7 +323,20 @@ const App = () => {
                     className="text-blue-600 underline"
                   >
                     https://driveup.in/help
+                  </a>a
+                </li>
+                <li>
+                  By email:{" "}
+                  <a
+                    href="mailto:hello@driveup.in"
+                    className="text-blue-600 underline"
+                  >
+                    hello@driveup.in
                   </a>
+                </li>
+                <li>By phone: +91-7548001045</li>
+                <li>
+                  By mail: Sugam Sudhir, Garia Main Road, Kolkata - 700103
                 </li>
               </ul>
             </div>
