@@ -502,7 +502,7 @@ const App = () => {
           property="og:description"
           content="Your personal car assistant powered by AI."
         />
-        <meta property="og:url" content="https://driveup.in/drivebot" />
+        <meta property="og:url" content="https://www.driveup.in/drivebot" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
