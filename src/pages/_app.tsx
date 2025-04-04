@@ -124,7 +124,7 @@ export default function App({ Component, pageProps }: AppProps) {
           content="Explore cars, get AI recommendations, track fuel prices, and more – all on DriveUp."
         />
         <meta property="og:image" content="/og-image.png" />
-        <meta property="og:url" content="https://driveup.in" />
+        <meta property="og:url" content="https://www.driveup.in" />
       </Head>
       <ModalProvider>
         <Component {...pageProps} />
