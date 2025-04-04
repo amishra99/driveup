@@ -694,7 +694,7 @@ const App = () => {
           property="og:description"
           content="Ask questions, get personalized help from our car experts."
         />
-        <meta property="og:url" content="https://driveup.in/consultation" />
+        <meta property="og:url" content="https://www.driveup.in/consultation" />
         <meta property="og:image" content="/og-image.png" />
       </Head>
 
