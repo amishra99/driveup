@@ -194,15 +194,14 @@ export default function Home() {
         </main>
 
         {/* ✅ Right Section: Desktop Stays the Same, Mobile Moves Below */}
-        <div className="w-full lg:w-1/2 flex justify-center">
+        <div id="login-form" className="w-full lg:w-1/2 flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
             whileHover={{
               scale: 1.02,
-              boxShadow: "0px 4px 20px rgba(255, 255, 255, 0.2)",
             }}
             whileTap={{ scale: 0.98 }}
             className="flex flex-col items-center justify-center bg-white/2 p-8 md:p-12 rounded-lg backdrop-blur-lg w-full max-w-sm sm:max-w-md mt-12 lg:mt-0"
