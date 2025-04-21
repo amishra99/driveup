@@ -486,6 +486,14 @@ const App = () => {
     content: string;
   };
 
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [conversationHistory, loading]);
+
   return (
     <>
       <Head>
@@ -745,6 +753,9 @@ const App = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* 👇 Scroll Target */}
+                  <div ref={bottomRef} />
 
                   {/* ✅ Clear Chat Button - now inside and padded */}
                   {conversationHistory.length > 0 && (
