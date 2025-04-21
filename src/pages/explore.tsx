@@ -1299,7 +1299,7 @@ const App = () => {
                   />
                   <div className="w-[1px] h-8 bg-gray-500 mx-2 hidden sm:block"></div>
                   {/* Quick Capsule Filters with Colors */}
-                  <div className="flex items-center gap-2 overflow-x-auto max-w-full">
+                  <div className="flex items-center gap-2 overflow-x-auto max-w-full scrollbar-hidden">
                     {bodyTypes.map((body, index) => (
                       <Button
                         key={index}
