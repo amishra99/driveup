@@ -92,7 +92,7 @@ const brands = [
   "Volvo",
 ];
 
-const bodyTypes = ["Sedan", "SUV", "Hatchback", "Luxury"];
+const bodyTypes = ["Sedan", "SUV", "Hatchback", "MPV"];
 const fuelTypes = ["Electric", "Hybrid"];
 
 type Car = {
@@ -560,64 +560,26 @@ const PriceFilter = ({
   </div>
 );
 
-type SearchBarProps = {
+const SearchBar = ({
+  searchQuery,
+  setSearchQuery,
+}: {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
-};
-
-const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
-  const [showSearchInput, setShowSearchInput] = useState(false);
-
-  const handleSearch = () => {
-    console.log("Searching for:", searchQuery);
-    // Filtering is already handled in the main component
-  };
-
+}) => {
   return (
     <div className="relative w-full flex items-center gap-2">
-      {/* Desktop Search Bar */}
+      {/* Desktop */}
       <div className="hidden sm:flex w-full relative">
         <input
           type="text"
           placeholder="Search here"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Updates global state
-          className="w-full p-2 bg-[#2a2a2a] border border-[#E9D8A6] text-white rounded-md"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 bg-[#2a2a2a] border border-[#E9D8A6] text-white rounded-md text-sm"
         />
-        <Search className="w-4 h-4 bg-[#2a2a2a] absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 mr-2" />
+        <Search className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" />
       </div>
-
-      {/* Mobile Search Button */}
-      <Button
-        className="bg-[#EE9B00] text-black hover:bg-white transition-all duration-300 sm:hidden w-full flex items-center gap-2"
-        onClick={() => setShowSearchInput(true)}
-      >
-        <Search className="w-5 h-5" />
-      </Button>
-
-      {/* Mobile Search Modal */}
-      {showSearchInput && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 sm:hidden">
-          <div className="relative w-11/12 sm:w-2/3 lg:w-1/2 p-4 bg-[#2a2a2a] border border-[#E9D8A6] rounded-md shadow-lg">
-            <input
-              type="text"
-              placeholder="Search here"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)} // Updates global state
-              className="w-full p-3 bg-[#2a2a2a] border border-[#E9D8A6] text-white rounded-md"
-              autoFocus
-            />
-            <div className="flex justify-between mt-3">
-              <Button
-                className="text-white"
-                onClick={() => setShowSearchInput(false)}
-              >
-                Go Back
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
@@ -748,20 +710,20 @@ const App = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsSidebarOpen(window.innerWidth >= 768);
-      setShowSearchInput(window.innerWidth >= 640);
     };
 
     if (typeof window !== "undefined") {
       setIsSidebarOpen(window.innerWidth >= 768);
-      setShowSearchInput(window.innerWidth >= 640);
       window.addEventListener("resize", handleResize);
     }
+
     return () => {
       if (typeof window !== "undefined") {
         window.removeEventListener("resize", handleResize);
       }
     };
   }, []);
+
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const rating = selectedCar?.rating; // 🔥 Dynamic rating (Change this value as needed)
@@ -1154,7 +1116,7 @@ const App = () => {
           property="og:description"
           content="Discover cars by features, safety, performance, and design. Filter and compare cars easily on DriveUp."
         />
-        <meta property="og:url" content="https://www.driveup.in/explore" />
+        <meta property="og:url" content="https://www.driveup.in" />
         <meta
           property="og:image"
           content="https://www.driveup.in/og-image.png"
@@ -1189,56 +1151,104 @@ const App = () => {
                 isSidebarOpen ? "ml-64" : "ml-16"
               } p-4 sm:p-8 min-w-screen flex-1 max-w-full overflow-x-hidden`}
             >
-              <div className="flex flex-col gap-4 mb-6">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-2xl mt-2">
-                    Let's Explore
-                    <strong className="text-[#E9D8A6] font-bold"> Cars</strong>
-                  </h1>
-                  <div className="flex flex-row sm:justify-between items-center sm:mt-4 mt-2 gap-4">
-                    <div className="relative">
-                      <SearchBar
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                      />
+              <div className="flex flex-col gap-1 mb-6">
+                <div className="flex flex-col gap-1 mb-6">
+                  {/* 🔹 Title + Subtitle */}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full">
+                    <div>
+                      <h1 className="text-2xl mt-4">
+                        Let’s explore
+                        <strong className="text-[#E9D8A6] font-bold">
+                          {" "}
+                          Cars
+                        </strong>
+                      </h1>
+                      <p className="text-gray-400 text-sm mt-1 max-w-full">
+                        Explore cars like a pro — we’ll help you discover the
+                        ride that truly fits your vibe.
+                      </p>
                     </div>
-                    {showSearchInput ? (
+
+                    {/* 🔹 Search + Favorites (Desktop only) */}
+                    <div className="flex-row sm:flex hidden items-center sm:mt-4 mt-2 gap-4">
+                      {/* 🔍 SearchBar */}
+                      <div className="relative min-w-[240px]">
+                        <SearchBar
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
+                        />
+                      </div>
+
+                      {/* ⭐ Favorites Toggle */}
                       <button
                         onClick={(e) => {
                           setShowFavorites((prev) => !prev);
-                          e.currentTarget.blur(); // ✅ Remove focus after click
+                          e.currentTarget.blur();
                         }}
                         className={`px-6 py-2 transition-all rounded flex items-center gap-2 ${
                           showFavorites
-                            ? "bg-[#0A9396] text-white hover:bg-[#00796B]"
-                            : "bg-[#EE9B00] text-black hover:bg-white"
+                            ? "bg-[#0A9396] text-white text-sm hover:bg-[#00796B]"
+                            : "bg-[#EE9B00] text-black text-sm hover:bg-white"
                         }`}
                       >
                         {showFavorites ? "Back to Explore" : "Your Favorites"}
                       </button>
-                    ) : (
-                      <Button
-                        className={`p-3 rounded ${
-                          showFavorites
-                            ? "bg-[#0A9396] text-white"
-                            : "bg-[#EE9B00] text-black"
-                        } hover:bg-white transition-all duration-300 sm:hidden w-full flex items-center gap-2`}
-                        onClick={(e) => {
-                          setShowFavorites((prev) => !prev);
-                          e.currentTarget.blur(); // ✅ Remove focus after click
-                        }}
-                      >
-                        <Star className="w-5 h-5" />
-                      </Button>
-                    )}
+                    </div>
                   </div>
                 </div>
 
+                {/* 🔹 Floating Action Buttons (FAB) - Mobile Only */}
+                <div className="fixed bottom-4 right-4 flex flex-col gap-3 sm:hidden z-50">
+                  {/* 🔍 Floating Search – triggers SearchBar modal */}
+                  <button
+                    onClick={() => setShowSearchInput(true)}
+                    className="rounded-full p-4 bg-[#0A9396] text-white shadow-2xl hover:scale-105 transition"
+                  >
+                    <Search className="w-6 h-6" />
+                  </button>
+
+                  {/* ⭐ Floating Favorites */}
+                  <button
+                    onClick={() => setShowFavorites((prev) => !prev)}
+                    className={`rounded-full p-4 shadow-2xl transition ${
+                      showFavorites
+                        ? "bg-[#BB3E03] text-white"
+                        : "bg-[#EE9B00] text-black"
+                    } hover:scale-105`}
+                    aria-label="Favorites"
+                  >
+                    <Star className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {showSearchInput && (
+                  <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 sm:hidden">
+                    <div className="relative w-11/12 p-4 bg-[#2a2a2a] border border-[#E9D8A6] rounded-md shadow-lg">
+                      <input
+                        type="text"
+                        placeholder="Search here"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full p-3 bg-[#2a2a2a] border border-[#E9D8A6] text-white rounded-md"
+                        autoFocus
+                      />
+                      <div className="flex justify-end mt-3">
+                        <Button
+                          className="text-white"
+                          onClick={() => setShowSearchInput(false)}
+                        >
+                          Go Back
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Filters Section */}
-                <div className="flex flex-wrap items-center gap-4 mt-6 sm:mt-6 lg:mt-1">
+                <div className="flex flex-wrap items-center gap-4 mt-1 sm:mt-1 lg:mt-1">
                   {/* Brand Dropdown with Custom Styling */}
                   {!showFavorites && (
-                    <div className="relative w-60">
+                    <div className="relative w-60 z-10">
                       <Select
                         className="text-xs lg:text-sm"
                         options={brands.map((brand) => ({
@@ -1287,8 +1297,7 @@ const App = () => {
                     maxPrice={priceRange[1]}
                     setPriceRange={setPriceRange}
                   />
-                  <div className="w-[1px] h-8 bg-gray-500 mx-2"></div>
-
+                  <div className="w-[1px] h-8 bg-gray-500 mx-2 hidden sm:block"></div>
                   {/* Quick Capsule Filters with Colors */}
                   <div className="flex items-center gap-2 overflow-x-auto max-w-full">
                     {bodyTypes.map((body, index) => (
@@ -1299,7 +1308,7 @@ const App = () => {
                           selectedbody === body
                             ? "bg-[#005F73] text-white border-white"
                             : "text-black"
-                        } hover:bg-white hover:text-black transition-all shadow-md`}
+                        } hover:bg-white hover:text-black focus:bg-[#005F73] transition-all shadow-md`}
                         onClick={(e) => {
                           setselectedbody(selectedbody === body ? null : body);
                           e.currentTarget.blur(); // ✅ removes focus after click
@@ -1319,7 +1328,7 @@ const App = () => {
                           selectedFuel === fuel
                             ? "bg-[#BB3E03] text-white border-white"
                             : "text-black"
-                        } hover:bg-white hover:text-black transition-all shadow-md`}
+                        } hover:bg-white hover:text-black focus:bg-[#BB3E03] transition-all shadow-md`}
                         onClick={(e) => {
                           setSelectedFuel(selectedFuel === fuel ? null : fuel);
                           e.currentTarget.blur(); // ✅ removes focus after click
@@ -1348,7 +1357,10 @@ const App = () => {
                   : // ✅ Show Actual Cars Once API Loads
                     filteredCars.map((car: Car) => (
                       <div
-                        onClick={() => setSelectedCar(car)} // ✅ Clicking on the Card should open details
+                        onClick={() => {
+                          window.scrollTo({ top: 0, behavior: "smooth" }); // 🔼 Scrolls to top
+                          setSelectedCar(car);
+                        }}
                         className="cursor-pointer"
                       >
                         <CarCard car={car} />
