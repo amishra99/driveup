@@ -44,9 +44,9 @@ export default async function handler(req, res) {
     let query = `
   WITH cte AS (
     SELECT cars.*, prices.budget AS car_price,
-    CASE WHEN engine_and_transmission_10000_power IS NULL THEN NULL
+    CASE WHEN engine_and_transmission_max_power IS NULL THEN NULL
     ELSE CAST(
-    NULLIF(REGEXP_REPLACE(engine_and_transmission_10000_power, '[^0-9.].*', '', 'g'), '') 
+    NULLIF(REGEXP_REPLACE(engine_and_transmission_max_power, '[^0-9.].*', '', 'g'), '') 
     AS NUMERIC
   )
  END AS hp_new,
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         FROM (
           SELECT variant_id, 
               CASE 
-                  WHEN ex_showroom_price ILIKE 'NA' OR ex_showroom_price ILIKE 'To be Announced' THEN NULL
+                  WHEN ex_showroom_price ILIKE 'N/A' OR ex_showroom_price ILIKE 'To be Announced' THEN NULL
                   WHEN ex_showroom_price ~ 'Lakh' THEN 
                       CAST(REGEXP_REPLACE(ex_showroom_price, 'Rs\.|\s|Lakh', '', 'g') AS DECIMAL) * 100000
                   WHEN ex_showroom_price ~ 'Crore' THEN 
