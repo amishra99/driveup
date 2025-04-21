@@ -31,6 +31,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      const publicRoutes = ["/", "/privacy-policy", "/terms-and-conditions"];
+
       if (user) {
         console.log("✅ User detected:", user.uid);
         localStorage.setItem("user", JSON.stringify(user));
@@ -54,7 +56,8 @@ export default function App({ Component, pageProps }: AppProps) {
         setUser(null);
         setUserStatus(null);
 
-        if (router.pathname !== "/") {
+        // ✅ Only redirect if not on a public route
+        if (!publicRoutes.includes(router.pathname)) {
           router.replace("/");
         }
       }
