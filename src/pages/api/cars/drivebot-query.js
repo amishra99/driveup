@@ -120,9 +120,9 @@ WHERE performance_and_fuel_economy_fuel_type ILIKE '%Petrol%';
 **User Question:** "List cars with more than 100 bhp power."  
 **SQL Query:**
 \`\`\`sql
-SELECT brand, model, variant, engine_and_transmission_10000_power 
+SELECT brand, model, variant, engine_and_transmission_max_power  
 FROM CAR_DRIVEBOT 
-WHERE engine_and_transmission_10000_power ~ '[1-9][0-9]{2,}bhp';
+WHERE engine_and_transmission_max_power  ~ '[1-9][0-9]{2,}bhp';
 \`\`\`
 
 **User Question:** "Which cars have automatic transmission?"  
@@ -314,7 +314,6 @@ Query Results:
 ${JSON.stringify(results)}
 
 Return only the final conversational answer. No explanations or raw data tables.`;
-
 
     const responseSummary = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
