@@ -4,9 +4,17 @@ import BlurText from "@/components/BlurText/BlurText";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import ShinyText from "@/components/ShinyText/ShinyText";
 import { LoginForm } from "@/components/login-form";
-import { motion } from "framer-motion";
 import { useModal } from "@/components/ui/animated-modal";
 import Head from "next/head";
+import mouse from "@/components/mouse.json";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+// ✅ This ensures Lottie is only rendered on the client
+const Lottie = dynamic(() => import("react-lottie-player"), {
+  ssr: false,
+});
 
 export default function Home() {
   const { setOpen } = useModal(); // ✅ Access modal state
@@ -15,6 +23,23 @@ export default function Home() {
   const handleAnimationComplete = () => {
     console.log("Animation completed!");
   };
+
+  const [showScrollIcon, setShowScrollIcon] = useState(false); // ✅
+
+  useEffect(() => {
+    const showTimer = setTimeout(() => {
+      setShowScrollIcon(true); // ⏳ After 3 sec, show
+    }, 3000);
+
+    const hideTimer = setTimeout(() => {
+      setShowScrollIcon(false); // ⏳ After 13 sec total (3+10), hide
+    }, 10000);
+
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
   return (
     <>
@@ -192,6 +217,25 @@ export default function Home() {
             <InfiniteScroll />
           </motion.div>
         </main>
+
+        <AnimatePresence>
+          {showScrollIcon && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }} // ⬇️ Starts slightly lower
+              animate={{ opacity: 1, y: 0 }} // ⬆️ Slides up into view
+              exit={{ opacity: 0, y: 50 }} // ⬇️ Slides down and disappears
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="fixed bottom-6 right-4 z-50 w-12 h-12 lg:hidden"
+            >
+              <Lottie
+                animationData={mouse}
+                loop={true}
+                play
+                style={{ width: "100%", height: "100%" }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* ✅ Right Section: Desktop Stays the Same, Mobile Moves Below */}
         <div id="login-form" className="w-full lg:w-1/2 flex justify-center">
