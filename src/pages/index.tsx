@@ -221,18 +221,24 @@ export default function Home() {
         <AnimatePresence>
           {showScrollIcon && (
             <motion.div
-              initial={{ opacity: 0, y: 50 }} // ⬇️ Starts slightly lower
-              animate={{ opacity: 1, y: 0 }} // ⬆️ Slides up into view
-              exit={{ opacity: 0, y: 50 }} // ⬇️ Slides down and disappears
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="fixed bottom-6 right-4 z-50 w-12 h-12 lg:hidden"
+              className="fixed bottom-0 left-0 w-full z-50 flex items-center justify-end py-4 px-6 lg:hidden"
+              // 👆 backdrop-blur-md added
             >
-              <Lottie
-                animationData={mouse}
-                loop={true}
-                play
-                style={{ width: "100%", height: "100%" }}
-              />
+              <div className="flex flex-col items-center">
+                <div className="w-10 h-10">
+                  <Lottie
+                    animationData={mouse}
+                    loop={true}
+                    play
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </div>
+                <p className="text-xs text-white mt-2 mb-2">S C R O L L</p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
