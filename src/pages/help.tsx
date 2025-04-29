@@ -621,6 +621,7 @@ const App = () => {
         <meta name="theme-color" content="#0a0a0a" />
         <meta name="robots" content="index, follow" />
         <link rel="icon" href="/driveup_fav.png" />
+        <link rel="canonical" href="https://www.driveup.in/help" />
 
         {/* ✅ Open Graph (Facebook / LinkedIn) */}
         <meta property="og:site_name" content="DriveUp" />
